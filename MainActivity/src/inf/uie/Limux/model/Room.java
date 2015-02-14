@@ -35,16 +35,11 @@ public class Room {
     private List<Profile> profileList;
 
     // ---------- CONSTRUCTORS ----------
-    public Room() {
+    public Room(String name, List<Lamp> lamps) {
         this.id = instanceCounter++;
-        this.name = "";
-        this.lampList = new ArrayList<Lamp>();
-        this.profileList = new ArrayList<Profile>();
-    }
-
-    public Room(String name) {
-        this();
         this.name = name;
+        this.lampList = lamps;
+        this.profileList = new ArrayList<Profile>();
     }
 
     // ---------- METHODS ----------
@@ -65,5 +60,23 @@ public class Room {
         for (Lamp lamp : lampList) {
             lamp.on();
         }
+    }
+    
+    public List<Profile> getProfiles() {
+    	return profileList;
+    }
+    
+    public void removeProfile(Profile profile) {
+    	profileList.remove(profile);
+    }
+    
+    public void addProfile(Profile profile) {
+    	profileList.add(profile);
+    }
+    
+    // ---------- GETTER&SETTER ---------- 
+    
+    public String getName() {
+    	return name;
     }
 }

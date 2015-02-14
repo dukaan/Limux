@@ -83,4 +83,10 @@ public class Profile {
     public void removeLamp(Lamp lamp) {
         lampList.remove(lamp);
     }
+    
+    // ---------- GETTER&SETTER ---------- 
+    
+    public String getName() {
+    	return name;
+    }
 }

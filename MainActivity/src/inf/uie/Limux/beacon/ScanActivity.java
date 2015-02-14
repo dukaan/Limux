@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import inf.uie.Limux.R;
+import inf.uie.Limux.model.House;
+import inf.uie.Limux.model.Profile;
+import inf.uie.Limux.model.Room;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -21,6 +24,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -67,6 +72,8 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 	private Boolean power;
 	private Boolean timestamp;
 	private String scanInterval;
+	
+	private House myHouse;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +96,51 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 		fileHelper = app.getFileHelper();
 		// Initialise scan button.
 		getScanButton().setText(MODE_STOPPED);
+		
+		myHouse = myHouse.getInstance();
+		
+		TextView title = (TextView) ScanActivity.this.findViewById(R.id.roomTitle);
+		title.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				if (s.toString().equals("Wohnzimmer (yin)")) {
+					for (Room room : myHouse.getRooms()) {
+						if(room.getName().contains("Wohnzimmer")) {
+							String roomProfiles = "";
+							for(Profile profile : room.getProfiles()) {
+								roomProfiles += " " + profile.getName();
+							}
+							logToProfilesTextView(roomProfiles);
+						}
+					}
+				} else {
+					for (Room room : myHouse.getRooms()) {
+						if(room.getName().contains("Schlafzimmer")) {
+							String roomProfiles = "";
+							for(Profile profile : room.getProfiles()) {
+								roomProfiles += " " + profile.getName();
+							}
+							logToProfilesTextView(roomProfiles);
+						}
+					}
+				}
+			}
+		});
     }
     
     @Override
@@ -148,7 +200,6 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 		
 		// Set UI elements to the correct state.
 		scanButton.setText(MODE_SCANNING);
-		((EditText)findViewById(R.id.scanText)).setText("");
 		
 		// Reset event counter
 		eventNum = 1;
@@ -171,10 +222,9 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 			beaconManager.setBackgroundBetweenScanPeriod(Long.parseLong(scanInterval));
 		}
 		
-		logToDisplay("Scanning...");
 		
 		
-		// Initialise scan log
+		// Initialize scan log
 		logString = new StringBuffer();
 		
 		//Start scanning again.
@@ -195,7 +245,6 @@ public class ScanActivity extends Activity implements BeaconConsumer {
         			}
         		}
         		if(minBeacon != null) {
-        			logToDisplay("Beacon: " + minBeacon.getId1());
             		if(minBeacon.getId1().toString().contains("adfaff29-f929-20f9-9f30-90470085cafb")) {
                 		logToTextView("Wohnzimmer (yin)");
             		} else {
@@ -285,7 +334,7 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 			scan.append(" Timestamp: " + BeaconHelper.getCurrentTimeStamp());
 		}
 	    
-		logToDisplay(scan.toString());
+		//logToDisplay(scan.toString());
 		scan.append("\n");
 		logString.append(scan.toString());
 		
@@ -295,6 +344,8 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 	 * 
 	 * @param line
 	 */
+	
+	/*
     private void logToDisplay(final String line) {
     	runOnUiThread(new Runnable() {
     	    public void run() {
@@ -303,13 +354,23 @@ public class ScanActivity extends Activity implements BeaconConsumer {
     	    	editText.setText(line);           	
     	    }
     	});
-    }
+    } */
     
     private void logToTextView(final String line) {
     	runOnUiThread(new Runnable() {
-    	    public void run() {
-    	    	TextView roomText = (TextView)ScanActivity.this.findViewById(R.id.roomText);
-    	    	roomText.setText(line);           	
+    	    public void run() {  
+    	    	TextView title = (TextView) ScanActivity.this.findViewById(R.id.roomTitle);
+    	    	title.setText(line);
+    	    	setTitle(line);
+    	    }
+    	});
+    }
+    
+    private void logToProfilesTextView(final String line) {
+    	runOnUiThread(new Runnable() {
+    	    public void run() {  
+    	    	TextView title = (TextView) ScanActivity.this.findViewById(R.id.profilesTextView);
+    	    	title.setText(line + "\n");
     	    }
     	});
     }

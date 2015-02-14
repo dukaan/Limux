@@ -42,6 +42,32 @@ public class House {
         this.id = 0;
         this.name = "";
         this.roomList = new ArrayList<Room>();
+        
+        // initialize sample data
+        Lamp lamp1 = new RGBLamp();
+        Lamp lamp2 = new RGBLamp();
+        Lamp lamp3 = new RGBLamp();
+        Lamp lamp4 = new RGBLamp();
+        
+        List<Lamp> livingRoomLamps = new ArrayList<Lamp>();
+        livingRoomLamps.add(lamp1);
+        livingRoomLamps.add(lamp2);
+        
+        List<Lamp> bedRoomLamps = new ArrayList<Lamp>();
+        bedRoomLamps.add(lamp3);
+        bedRoomLamps.add(lamp4);
+        
+        
+        Room livingRoom = new Room("Wohnzimmer", livingRoomLamps);
+        livingRoom.addProfile(new Profile("Chillen"));
+        livingRoom.addProfile(new Profile("Essen"));
+        
+        Room bedRoom = new Room("Schlafzimmer", bedRoomLamps);
+        bedRoom.addProfile(new Profile("Einschlafen"));
+        bedRoom.addProfile(new Profile("Aufwachen"));
+        
+        roomList.add(livingRoom);
+        roomList.add(bedRoom);
     }
 
     // ---------- STATIC METHODS ----------
@@ -59,9 +85,6 @@ public class House {
     }
 
     // ---------- METHODS ----------
-    public void addProfile(Profile profile) {
-        // TODO
-    }
 
     /**
      * Turns all lamps in the house off
@@ -81,17 +104,25 @@ public class House {
         }
     }
 
+    // returns a list of all profiles in the house
     public List<Profile> getAllProfiles() {
-        // TODO
-        return null;
-    }
-
-    public void removeProfile(Profile profile) {
-        // TODO
+    	List<Profile> allProfiles = new ArrayList<Profile>();
+    	
+    	for (Room room : roomList) {
+    		for (Profile profile : room.getProfiles()){
+    			allProfiles.add(profile);
+    		}
+    	}
+    	
+        return allProfiles;
     }
 
     // ---------- GETTER & SETTER ----------
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public List<Room> getRooms() {
+    	return roomList;
     }
 }

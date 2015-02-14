@@ -25,10 +25,10 @@ int id nearestBeaconText 0x7f0b0000
 int id off 0x7f0b0006
 int id open 0x7f0b0004
 int id pager 0x7f0b0007
+int id profilesTextView 0x7f0b000c
 int id rect 0x7f0b000d
-int id roomText 0x7f0b000c
-int id scanButton 0x7f0b000b
-int id scanText 0x7f0b000a
+int id roomTitle 0x7f0b000b
+int id scanButton 0x7f0b000a
 int id send 0x7f0b0001
 int layout activity_bluetooth 0x7f030000
 int layout activity_main 0x7f030001

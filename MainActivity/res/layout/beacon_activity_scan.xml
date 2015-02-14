@@ -5,39 +5,29 @@
     android:background="@color/dark_blue"
     tools:context="inf.uie.Limux.beacon.ScanActivity" >
 
-    <EditText
-        android:id="@+id/scanText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:clickable="false"
-        android:duplicateParentState="false"
-        android:ems="10"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:gravity="left|top"
-        android:inputType="textMultiLine"
-        android:longClickable="false" >
-
-        <requestFocus />
-    </EditText>
-
     <Button
         android:id="@+id/scanButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/scanText"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
         android:onClick="onScanButtonClicked" />
 
     <TextView
-        android:id="@+id/roomText"
+        android:id="@+id/roomTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/profilesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/roomTitle"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="54dp"
         android:text="TextView" />
     
 </RelativeLayout>
