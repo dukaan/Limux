@@ -4,6 +4,9 @@ package inf.uie.Limux.model;
  * @author Marcel
  */
 public abstract class Lamp {
+    // ---------- STATIC MEMBERS -----------
+    private static int instanceCounter;
+
     // ---------- MEMBERS ----------
     /**
      * ID of the Lamp
@@ -17,7 +20,13 @@ public abstract class Lamp {
 
     // ---------- CONSTRUCTORS ----------
     public Lamp() {
-        // TODO
+        this.id = instanceCounter++;
+        this.name = "";
+    }
+
+    public Lamp(String name) {
+        this();
+        this.name = name;
     }
 
     // --------- METHODS ----------

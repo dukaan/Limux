@@ -12,7 +12,13 @@ public class RGBLamp extends Lamp {
 
     // ---------- CONSTRUCTORS ----------
     public RGBLamp() {
-        // TODO
+        super();
+        this.color = Color.WHITE;
+    }
+
+    public RGBLamp(String name) {
+        super(name);
+        this.color = Color.WHITE;
     }
 
     // --------- GETTER & SETTER ----------

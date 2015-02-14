@@ -1,5 +1,6 @@
 package inf.uie.Limux.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +23,7 @@ public class House {
     private int id;
 
     /**
-     * Name of the house
+     * A name for a house .... like a pet
      */
     private String name;
 
@@ -32,21 +33,27 @@ public class House {
     private List<Room> roomList;
 
     // ---------- CONSTRUCTORS ----------
+
     /**
      * Singleton Constructor
      */
-    private House () {
-        // TODO
+    private House() {
+        // random id -> house is singleton
+        this.id = 0;
+        this.name = "";
+        this.roomList = new ArrayList<Room>();
     }
 
     // ---------- STATIC METHODS ----------
+
     /**
      * Get the instance of the singleton
+     *
      * @return instance
      */
-    public static House getInstance () {
+    public static House getInstance() {
         if (House.instance == null) {
-            House.instance = new House ();
+            House.instance = new House();
         }
         return House.instance;
     }
@@ -56,12 +63,22 @@ public class House {
         // TODO
     }
 
+    /**
+     * Turns all lamps in the house off
+     */
     public void allLampsOff() {
-        // TODO
+        for (Room room : roomList) {
+            room.allLampsOff();
+        }
     }
 
+    /**
+     * Turns all lamps in the house on
+     */
     public void allLampsOn() {
-        // TODO
+        for (Room room : roomList) {
+            room.allLampsOn();
+        }
     }
 
     public List<Profile> getAllProfiles() {
@@ -71,5 +88,10 @@ public class House {
 
     public void removeProfile(Profile profile) {
         // TODO
+    }
+
+    // ---------- GETTER & SETTER ----------
+    public void setName(String name) {
+        this.name = name;
     }
 }

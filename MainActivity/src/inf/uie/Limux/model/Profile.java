@@ -1,13 +1,18 @@
 package inf.uie.Limux.model;
 
-import inf.uie.Limux.bluetooth.Bluetooth;
-
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Marcel
  */
 public class Profile {
+    // ---------- STATIC MEMBERS ----------
+    /**
+     * Counts how much instances have been initiated. Used for id incrementation
+     */
+    private static int instanceCounter;
+
     // ---------- MEMBERS -----------
     /**
      * ID of the profile
@@ -18,11 +23,6 @@ public class Profile {
      * name of profile
      */
     private String name;
-
-    /**
-     * TODO Was macht der genau hier?
-     */
-    private Bluetooth bluetoothAdapter;
 
     /**
      * A list of colors available/used in this profile
@@ -40,32 +40,47 @@ public class Profile {
     private List<Room> roomList;
 
     // ---------- CONSTRUCTORS ----------
-    public Profile() {
-        // TODO
+    public Profile(String name) {
+        this.id = instanceCounter++;
+        this.name = name;
+
+        this.colorList = new ArrayList<Color>();
+        this.lampList = new ArrayList<Lamp>();
+        this.roomList = new ArrayList<Room>();
     }
 
     // ---------- METHODS ----------
     public void enable() {
-        // TODO
+        /*
+            TODO
+            Hier müssen wir uns mal ein Konzept überlegen, wie wir vor dem
+            Einschalten die Farbe/Helligkeit der Lampe setzen und vor allem speichern
+            Vielleicht mit einer Map?
+        */
+        for (Lamp lamp : lampList) {
+            lamp.on();
+        }
     }
 
     public void disable() {
-        // TODO
+        for (Lamp lamp : lampList) {
+            lamp.off();
+        }
     }
 
-    public void addColor() {
-        // TODO
+    public void addColor(Color color) {
+        colorList.add(color);
     }
 
-    public void removeColor() {
-        // TODO
+    public void removeColor(Color color) {
+        colorList.remove(color);
     }
 
-    public void addLamp() {
-        // TODO
+    public void addLamp(Lamp lamp) {
+        lampList.add(lamp);
     }
 
-    public void removeLamp() {
-        // TODO
+    public void removeLamp(Lamp lamp) {
+        lampList.remove(lamp);
     }
 }
