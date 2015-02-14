@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Limux</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="beacon_settings">BeaconScanner</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_bluetoothdapter">Bluetoothdapter</string>
+    <string name="title_activity_main_activity2">MainActivity2</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="title_activity_btadapter">BTAdapter</string>
+    <string name="Text">Status: -</string>
+    <string name="on">Turn On</string>
+    <string name="off">Turn Off</string>
+    <string name="List">List paired Devices</string>
+    <string name="Find">Search new Devices / Cancel</string>
+    <string name="click_the_button_to_start_or_stop_scanning">Click the button to start or stop scanning.</string>
+    <string name="Settings">Settings</string>
+    <string name="action_listfiles">List files</string>
+    <string name="action_deletefiles">Delete Files</string>
+    <string name="action_transferfiles">Transfer Files</string>
+    <string name="title_activity_main_screen">MainScreenActivity</string>
+
+</resources>
