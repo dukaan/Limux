@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:id="@+id/scanActivityLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="@color/dark_blue"
     tools:context="inf.uie.Limux.beacon.ScanActivity" >
 
@@ -19,15 +20,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="TextView" />
+        android:text="Room Title" />
 
     <TextView
         android:id="@+id/profilesTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/roomTitle"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginBottom="54dp"
-        android:text="TextView" />
+        android:text="Profiles" />
     
 </RelativeLayout>

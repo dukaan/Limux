@@ -43,7 +43,7 @@ public class House {
         this.name = "";
         this.roomList = new ArrayList<Room>();
         
-        // initialize sample data
+        // initialize sample data for testing
         Lamp lamp1 = new RGBLamp();
         Lamp lamp2 = new RGBLamp();
         Lamp lamp3 = new RGBLamp();

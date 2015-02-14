@@ -32,6 +32,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,6 +76,7 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 	private Boolean timestamp;
 	private String scanInterval;
 	
+	// house variable (singleton)
 	private House myHouse;
     
     @Override
@@ -99,6 +103,7 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 		
 		myHouse = myHouse.getInstance();
 		
+		// adding onChangeListener for TextView to show profiles of the nearest room
 		TextView title = (TextView) ScanActivity.this.findViewById(R.id.roomTitle);
 		title.addTextChangedListener(new TextWatcher() {
 			
@@ -115,6 +120,7 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 				
 			}
 			
+			// solution very cumbersome, new implementation needed, but now for testing purposes -> TODO
 			@Override
 			public void afterTextChanged(Editable s) {
 				// TODO Auto-generated method stub
@@ -238,6 +244,7 @@ public class ScanActivity extends Activity implements BeaconConsumer {
         			while (beaconIterator.hasNext()) {
         				Beacon beacon = beaconIterator.next();
         				//logBeaconData(beacon); old line to log data
+        				// decide which beacon is the nearest
         				if(beacon.getRssi() > min_rssi) {
         					minBeacon = beacon;
         					min_rssi = beacon.getRssi();
@@ -291,7 +298,6 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 	}
 
 	/**
-	 * 
 	 * @return
 	 */
 	private Button getScanButton() {
@@ -299,8 +305,8 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 	}
 	
     /**
-     * 
      * @param iBeacon
+     * not used right now, maybe later
      */
 	private void logBeaconData(Beacon beacon) {
 
@@ -340,22 +346,10 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 		
 	}
     
+
 	/**
-	 * 
-	 * @param line
-	 */
-	
-	/*
-    private void logToDisplay(final String line) {
-    	runOnUiThread(new Runnable() {
-    	    public void run() {
-    	    	EditText editText = (EditText)ScanActivity.this
-    					.findViewById(R.id.scanText);
-    	    	editText.setText(line);           	
-    	    }
-    	});
-    } */
-    
+	 * line logging methods to change TextView contents
+	 * */
     private void logToTextView(final String line) {
     	runOnUiThread(new Runnable() {
     	    public void run() {  
@@ -375,6 +369,9 @@ public class ScanActivity extends Activity implements BeaconConsumer {
     	});
     }
     
+    /**
+     * verify if bluetooth is available and/or enabled, because bluetooth is required to run the app
+     * */
  	private void verifyBluetooth() {
 
 		try {
