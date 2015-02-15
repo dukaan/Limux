@@ -2,8 +2,10 @@ package inf.uie.Limux.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Marcel
@@ -29,7 +31,7 @@ public class Profile {
     /**
      * A list of colors available/used in this profile
      */
-    private List<LampColor> usedColorsList;
+    private HashSet<LampColor> usedColorsSet;
 
     /**
      * A list of active lamps in this profile
@@ -51,7 +53,7 @@ public class Profile {
         this.id = instanceCounter++;
         this.name = name;
 
-        this.usedColorsList = new ArrayList<LampColor>();
+        this.usedColorsSet = new HashSet<LampColor>();
         this.activeLampsList = new ArrayList<Lamp>();
         this.roomList = new ArrayList<Room>();
         
@@ -85,7 +87,7 @@ public class Profile {
     	}
     	
     	lampWithColorMap.put(lamp, color);
-        usedColorsList.add(color);
+        usedColorsSet.add(color);
     	activeLampsList.add(lamp);
     }
 
@@ -97,7 +99,7 @@ public class Profile {
     	// iterate over all used colors of the profile, if color of deactivated lamp is still used by another lamp, keep it, otherwise delete it from usedColorsList
     	for(LampColor color : lampWithColorMap.values()) {
     		if(color.getColorCodeAsString().equals(removedColor.getColorCodeAsString())) break;
-    		usedColorsList.remove(removedColor);
+    		usedColorsSet.remove(removedColor);
     	}
     }
     
@@ -111,8 +113,8 @@ public class Profile {
     	return activeLampsList;
     }
     
-    public List<LampColor> getUsedColors() {
-    	return usedColorsList;
+    public HashSet<LampColor> getUsedColors() {
+    	return usedColorsSet;
     }
     
     public Map<Lamp, LampColor> getLampWithColorMap() {

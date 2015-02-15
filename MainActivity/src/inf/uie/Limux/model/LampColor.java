@@ -96,4 +96,8 @@ public class LampColor {
     	
     	return hexCode;
     }
+    
+    public String getName() {
+    	return name;
+    }
 }

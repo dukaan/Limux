@@ -145,6 +145,7 @@ public class EditProfileActivity extends Activity {
 			// TODO Auto-generated method stub
 			Intent profileColorsActivity = new Intent(EditProfileActivity.this, ProfileColorsActivity.class);
 			profileColorsActivity.putExtra("lampName", ((Button) v).getText().toString());
+			profileColorsActivity.putExtra("profileName", currentProfile.getName());
 			startActivity(profileColorsActivity);
 		}
 	};

@@ -4,14 +4,24 @@ import inf.uie.Limux.R;
 import inf.uie.Limux.R.id;
 import inf.uie.Limux.R.layout;
 import inf.uie.Limux.R.menu;
+import inf.uie.Limux.model.House;
+import inf.uie.Limux.model.LampColor;
+import inf.uie.Limux.model.Profile;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class ProfileColorsActivity extends Activity {
+	
+	private House myHouse = House.getInstance();
+	private Profile currentProfile = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -21,9 +31,23 @@ public class ProfileColorsActivity extends Activity {
 		
 		// set title with name of clicked lamp
 		Intent lastIntent = getIntent();
+		
 		String lampName = lastIntent.getStringExtra("lampName");
 		TextView titleTextView = (TextView) findViewById(R.id.title);
 		titleTextView.append("\n" + lampName.toUpperCase());
+		
+		String profileName = lastIntent.getStringExtra("profileName");
+		currentProfile = myHouse.getProfileByName(profileName);
+		
+		for (LampColor lampColor : currentProfile.getUsedColors()) {
+			Button colorButton = new Button(this);
+			LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(250, 250);
+			colorButton.setLayoutParams(rl);
+			colorButton.setText(lampColor.getName());
+			colorButton.setTextSize(10.f);
+			//colorButton.setOnClickListener(profileButtonClickListener);
+			((GridLayout) findViewById(R.id.colorGrid)).addView(colorButton);
+		}
 	}
 
 	@Override
