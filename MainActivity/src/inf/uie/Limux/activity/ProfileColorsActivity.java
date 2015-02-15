@@ -7,6 +7,7 @@ import inf.uie.Limux.R.menu;
 import inf.uie.Limux.model.House;
 import inf.uie.Limux.model.LampColor;
 import inf.uie.Limux.model.Profile;
+import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -39,14 +40,24 @@ public class ProfileColorsActivity extends Activity {
 		String profileName = lastIntent.getStringExtra("profileName");
 		currentProfile = myHouse.getProfileByName(profileName);
 		
-		for (LampColor lampColor : currentProfile.getUsedColors()) {
-			Button colorButton = new Button(this);
-			LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(250, 250);
-			colorButton.setLayoutParams(rl);
-			colorButton.setText(lampColor.getName());
-			colorButton.setTextSize(10.f);
-			//colorButton.setOnClickListener(profileButtonClickListener);
-			((GridLayout) findViewById(R.id.colorGrid)).addView(colorButton);
+		if(currentProfile != null) {
+			if (!currentProfile.getUsedColors().isEmpty()) {
+				for (LampColor lampColor : currentProfile.getUsedColors()) {
+					Button colorButton = new Button(this);
+					LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(250, 250);
+					colorButton.setLayoutParams(rl);
+					colorButton.setText(lampColor.getName());
+					colorButton.setTextSize(10.f);
+					//colorButton.setOnClickListener(profileButtonClickListener);
+					((GridLayout) findViewById(R.id.colorGrid)).addView(colorButton);
+				}
+			}
+		} else {
+			TextView infoText = new TextView(this);
+			LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			infoText.setLayoutParams(rl);
+			infoText.setText("No Colors used yet.");
+			((GridLayout) findViewById(R.id.colorGrid)).addView(infoText);
 		}
 	}
 

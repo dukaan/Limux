@@ -67,7 +67,7 @@ public class NewProfileActivity extends Activity {
 				title.setText(room.getName().toUpperCase());
 				for(Lamp lamp : room.getLamps()) {
 					Button lampButton = new Button(this);
-					LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(350, 150);
+					LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(250, 250);
 					lampButton.setLayoutParams(rl);
 					lampButton.setText(lamp.getName());
 					lampButton.setTextSize(10.f);
@@ -79,7 +79,7 @@ public class NewProfileActivity extends Activity {
 				title.setText(room.getName().toUpperCase());
 				for(Lamp lamp : room.getLamps()) {
 					Button lampButton = new Button(this);
-					LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(350, 150);
+					LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(250, 250);
 					lampButton.setLayoutParams(rl);
 					lampButton.setText(lamp.getName());
 					lampButton.setTextSize(10.f);
