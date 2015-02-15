@@ -6,14 +6,6 @@
     android:background="@color/dark_blue"
     tools:context="inf.uie.Limux.beacon.ScanActivity" >
 
-    <Button
-        android:id="@+id/scanButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:onClick="onScanButtonClicked" />
-
     <TextView
         android:id="@+id/roomTitle"
         android:layout_width="wrap_content"
@@ -22,12 +14,12 @@
         android:layout_centerHorizontal="true"
         android:text="Room Title" />
 
-    <TextView
-        android:id="@+id/profilesTextView"
+    <Button
+        android:id="@+id/scanButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Profiles" />
+        android:onClick="onScanButtonClicked" />
     
 </RelativeLayout>

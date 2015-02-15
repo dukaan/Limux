@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import inf.uie.Limux.R;
+import inf.uie.Limux.activity.MainActivity;
 import inf.uie.Limux.model.House;
 import inf.uie.Limux.model.Profile;
 import inf.uie.Limux.model.Room;
@@ -16,6 +17,7 @@ import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 
+import android.R.integer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -58,7 +60,6 @@ public class ScanActivity extends Activity implements BeaconConsumer {
     private static final String MODE_STOPPED = "Start Scanning";
     protected static final String TAG = "ScanActivity";
     
-    private FileHelper fileHelper; 
     private BeaconManager beaconManager;
     private Region region; 
     private int eventNum = 1;
@@ -78,6 +79,9 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 	
 	// house variable (singleton)
 	private House myHouse;
+	
+	// id counter to set unique id for profile buttons
+	private int profileButtonId;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,11 +101,10 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 		
 		region = new Region("myRangingUniqueId", null, null, null);
 
-		fileHelper = app.getFileHelper();
-		// Initialise scan button.
+		// Initialize scan button.
 		getScanButton().setText(MODE_STOPPED);
 		
-		myHouse = myHouse.getInstance();
+		myHouse = House.getInstance();
 		
 		// adding onChangeListener for TextView to show profiles of the nearest room
 		TextView title = (TextView) ScanActivity.this.findViewById(R.id.roomTitle);
@@ -127,21 +130,59 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 				if (s.toString().equals("Wohnzimmer (yin)")) {
 					for (Room room : myHouse.getRooms()) {
 						if(room.getName().contains("Wohnzimmer")) {
-							String roomProfiles = "";
-							for(Profile profile : room.getProfiles()) {
-								roomProfiles += " " + profile.getName();
+							
+							// remove all existing buttons before adding new ones
+							for(int i=1;i<=profileButtonId;i++) {
+								((RelativeLayout) findViewById(R.id.scanActivityLayout)).removeView(findViewById(i));
 							}
-							logToProfilesTextView(roomProfiles);
+							// reset button ids
+							profileButtonId = 1;
+							
+							// iterate over all profiles of a room and add a button for each profile
+							for(Profile profile : room.getProfiles()) {
+								Button profileButton = new Button(ScanActivity.this);
+								profileButton.setId(profileButtonId);
+								RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+								if(profileButtonId == 1){
+									rl.addRule(RelativeLayout.BELOW, R.id.roomTitle);
+								} else {
+									rl.addRule(RelativeLayout.BELOW, profileButtonId - 1);
+								}
+								rl.addRule(RelativeLayout.CENTER_HORIZONTAL);
+								profileButton.setLayoutParams(rl);
+								profileButton.setText(profile.getName());
+								((RelativeLayout) findViewById(R.id.scanActivityLayout)).addView(profileButton);
+								profileButtonId++;
+							}
 						}
 					}
 				} else {
 					for (Room room : myHouse.getRooms()) {
 						if(room.getName().contains("Schlafzimmer")) {
-							String roomProfiles = "";
+							
+							// remove all existing buttons before adding new ones
+							for(int i=1;i<=profileButtonId;i++) {
+								((RelativeLayout) findViewById(R.id.scanActivityLayout)).removeView(findViewById(i));
+							}	
+							// reset button ids
+							profileButtonId = 1;
+							
+							// iterate over all profiles of a room and add a button for each profile
 							for(Profile profile : room.getProfiles()) {
-								roomProfiles += " " + profile.getName();
+								Button profileButton = new Button(ScanActivity.this);
+								profileButton.setId(profileButtonId);
+								RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+								if(profileButtonId == 1){
+									rl.addRule(RelativeLayout.BELOW, R.id.roomTitle);
+								} else {
+									rl.addRule(RelativeLayout.BELOW, profileButtonId - 1);
+								}
+								rl.addRule(RelativeLayout.CENTER_HORIZONTAL);
+								profileButton.setLayoutParams(rl);
+								profileButton.setText(profile.getName());
+								((RelativeLayout) findViewById(R.id.scanActivityLayout)).addView(profileButton);
+								profileButtonId++;
 							}
-							logToProfilesTextView(roomProfiles);
 						}
 					}
 				}
@@ -176,10 +217,10 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 	    		Intent api = new Intent(this, AppPreferenceActivity.class);
 	            startActivityForResult(api, 0);
 	            return true;
-	    	case R.id.action_listfiles:
-	    		// Launch list files activity
-	    		Intent fhi = new Intent(this, FileHandlerActivity.class);
-	            startActivity(fhi);
+	    	case R.id.action_show_options:
+	    		// launch options when actionbar button is clicked
+	    		Intent options = new Intent(this, MainActivity.class);
+	            startActivity(options);
 	            return true;	    			    		
 	        default:
 	            return super.onOptionsItemSelected(item);
@@ -274,26 +315,11 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 	 * Stop looking for beacons.
 	 */
 	private void stopScanning(Button scanButton) {
+		scanButton.setText(MODE_STOPPED);
 		try {
 			beaconManager.stopRangingBeaconsInRegion(region);
 		} catch (RemoteException e) {
 				// TODO - OK, what now then?
-		}
-		String scanData = logString.toString();
-		if (scanData.length() > 0) {
-			// Write file
-			fileHelper.createFile(scanData);
-			// Display file created message.
-			Toast.makeText(getBaseContext(),
-					"File saved to:" + getFilesDir().getAbsolutePath(),
-					Toast.LENGTH_SHORT).show();
-			scanButton.setText(MODE_STOPPED);
-		} else {
-			// We didn't get any data, so there's no point writing an empty file.
-			Toast.makeText(getBaseContext(),
-					"No data captured during scan, output file will not be created.",
-					Toast.LENGTH_SHORT).show();
-			scanButton.setText(MODE_STOPPED);
 		}
 	}
 
@@ -356,15 +382,6 @@ public class ScanActivity extends Activity implements BeaconConsumer {
     	    	TextView title = (TextView) ScanActivity.this.findViewById(R.id.roomTitle);
     	    	title.setText(line);
     	    	setTitle(line);
-    	    }
-    	});
-    }
-    
-    private void logToProfilesTextView(final String line) {
-    	runOnUiThread(new Runnable() {
-    	    public void run() {  
-    	    	TextView title = (TextView) ScanActivity.this.findViewById(R.id.profilesTextView);
-    	    	title.setText(line + "\n");
     	    }
     	});
     }
