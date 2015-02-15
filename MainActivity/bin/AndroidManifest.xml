@@ -32,6 +32,8 @@
         </activity>
         <activity android:label="@string/title_activity_main_screen" android:name="inf.uie.Limux.beacon.MainScreenActivity">
         </activity>
+        <activity android:label="@string/title_activity_new_profile" android:name="inf.uie.Limux.activity.NewProfileActivity">
+        </activity>
 
         <service android:enabled="true" android:exported="true" android:isolatedProcess="false" android:label="beacon" android:name="org.altbeacon.beacon.service.BeaconService">
         </service>

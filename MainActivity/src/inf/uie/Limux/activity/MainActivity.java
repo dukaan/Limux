@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import inf.uie.Limux.beacon.ScanActivity;
 import inf.uie.Limux.bluetooth.Bluetooth;
 import inf.uie.Limux.R;
@@ -103,6 +104,12 @@ public class MainActivity extends FragmentActivity implements
         }
     }
 
+    
+	public void newProfileButtonClick(View view) {
+		Intent newProfileActivity = new Intent(this, NewProfileActivity.class);
+		startActivity(newProfileActivity);
+	}
+	
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
 	}

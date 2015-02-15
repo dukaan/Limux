@@ -295,8 +295,13 @@ public class ScanActivity extends Activity implements BeaconConsumer {
         		if(minBeacon != null) {
             		if(minBeacon.getId1().toString().contains("adfaff29-f929-20f9-9f30-90470085cafb")) {
                 		logToTextView("Wohnzimmer (yin)");
-            		} else {
+                		logToText(minBeacon.getId1().toString());
+            		} else if(minBeacon.getId1().toString().contains("fe0239fe")) {
             			logToTextView("Schlafzimmer (Duc)");
+            			logToText(minBeacon.getId1().toString());
+            		} else {
+            			logToTextView("No room nearby.");
+            			logToText("No room nearby");
             		}
         		} 
         	}
@@ -376,6 +381,16 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 	/**
 	 * line logging methods to change TextView contents
 	 * */
+	
+    private void logToText(final String line) {
+    	runOnUiThread(new Runnable() {
+    	    public void run() {  
+    	    	TextView title = (TextView) ScanActivity.this.findViewById(R.id.textView1);
+    	    	title.setText(line);
+    	    }
+    	});
+    }
+	
     private void logToTextView(final String line) {
     	runOnUiThread(new Runnable() {
     	    public void run() {  

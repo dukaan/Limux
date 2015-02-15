@@ -54,8 +54,12 @@
                 android:value=".beacon.ScanActivity" />
         </activity>
         <activity
-            android:name="inf.uie.Limux.beacon.MainScreenActivity"
+            android:name=".beacon.MainScreenActivity"
             android:label="@string/title_activity_main_screen" >
+        </activity>
+        <activity
+            android:name="inf.uie.Limux.activity.NewProfileActivity"
+            android:label="@string/title_activity_new_profile" >
         </activity>
     </application>
 

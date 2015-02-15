@@ -22,6 +22,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="30dp"
         android:background="#00000000"
+        android:onClick="newProfileButtonClick"
         android:src="@drawable/add_icon" />
 
     <TextView
