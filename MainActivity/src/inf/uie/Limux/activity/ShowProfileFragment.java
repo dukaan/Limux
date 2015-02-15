@@ -7,8 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import inf.uie.Limux.R;
@@ -17,6 +19,7 @@ import inf.uie.Limux.model.House;
 
 public class ShowProfileFragment extends Fragment {
 
+	// house variable (singleton)
 	private House myHouse;
 
 	@Override
@@ -34,14 +37,29 @@ public class ShowProfileFragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		
+		// add a button for each existing profile in the house
 		for(inf.uie.Limux.model.Profile profile : myHouse.getAllProfiles()) {
 			Button profileButton = new Button(getActivity());
-			RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(350, 150);
 			profileButton.setLayoutParams(rl);
 			profileButton.setText(profile.getName());
+			profileButton.setTextSize(10.f);
+			profileButton.setOnClickListener(profileButtonClickListener);
 			((GridLayout) getView().findViewById(R.id.buttonGrid)).addView(profileButton);
 		}
 		
 	}
+	
+	// onClickListener for every profile button which opens up "EditProfileActivity"
+	OnClickListener profileButtonClickListener = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			Intent editProfileActivity = new Intent(getActivity(), EditProfileActivity.class);
+			editProfileActivity.putExtra("profileName", ((Button) v).getText().toString());
+			startActivity(editProfileActivity);
+		}
+	};
 
 }

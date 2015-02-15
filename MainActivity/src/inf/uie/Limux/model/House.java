@@ -44,10 +44,14 @@ public class House {
         this.roomList = new ArrayList<Room>();
         
         // initialize sample data for testing
-        Lamp lamp1 = new RGBLamp();
-        Lamp lamp2 = new RGBLamp();
-        Lamp lamp3 = new RGBLamp();
-        Lamp lamp4 = new RGBLamp();
+        LampColor red = new LampColor("Rot", 255, 0, 0);
+        LampColor green = new LampColor("Gruen", 0, 255, 0);
+        LampColor blue = new LampColor("Blau", 0, 0, 255);
+        
+        RGBLamp lamp1 = new RGBLamp("Lampe1");
+        RGBLamp lamp2 = new RGBLamp("Lampe2");
+        RGBLamp lamp3 = new RGBLamp("Lampe3");
+        RGBLamp lamp4 = new RGBLamp("Lampe4");
         
         List<Lamp> livingRoomLamps = new ArrayList<Lamp>();
         livingRoomLamps.add(lamp1);
@@ -57,14 +61,28 @@ public class House {
         bedRoomLamps.add(lamp3);
         bedRoomLamps.add(lamp4);
         
+        Profile chill = new Profile("Chillen");
+        chill.addColorForLamp(lamp1, red);
+        chill.addColorForLamp(lamp2, green);
+        
+        Profile eat = new Profile("Essen");
+        eat.addColorForLamp(lamp2, blue);
+        eat.addColorForLamp(lamp1, blue);
+        
+        Profile sleep = new Profile("Einschlafen");
+        sleep.addColorForLamp(lamp3, red);
+        
+        Profile wake = new Profile("Aufwachen");
+        wake.addColorForLamp(lamp3, green);
+        wake.addColorForLamp(lamp4, blue);
         
         Room livingRoom = new Room("Wohnzimmer", livingRoomLamps);
-        livingRoom.addProfile(new Profile("Chillen"));
-        livingRoom.addProfile(new Profile("Essen"));
+        livingRoom.addProfile(chill);
+        livingRoom.addProfile(eat);
         
         Room bedRoom = new Room("Schlafzimmer", bedRoomLamps);
-        bedRoom.addProfile(new Profile("Einschlafen"));
-        bedRoom.addProfile(new Profile("Aufwachen"));
+        bedRoom.addProfile(sleep);
+        bedRoom.addProfile(wake);
         
         roomList.add(livingRoom);
         roomList.add(bedRoom);
@@ -115,6 +133,21 @@ public class House {
     	}
     	
         return allProfiles;
+    }
+    
+    public Profile getProfileByName(String name) {
+    	Profile profile = null;
+    	
+    	for (Profile p : getAllProfiles()) {
+    		if(p.getName().equals(name)) {
+    			profile = p;
+    			break;
+    		} else {
+    			profile = null;
+    		} 
+    	}
+    	
+    	return profile;
     }
 
     // ---------- GETTER & SETTER ----------

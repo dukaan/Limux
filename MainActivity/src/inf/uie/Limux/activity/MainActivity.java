@@ -14,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import inf.uie.Limux.beacon.ScanActivity;
 import inf.uie.Limux.bluetooth.Bluetooth;
 import inf.uie.Limux.R;
@@ -26,7 +28,7 @@ public class MainActivity extends FragmentActivity implements
 	private TabsPagerAdapter mAdapter;
 	private ActionBar actionBar;
 	// Tab titles
-	private String[] tabs = { "Räume", "Profile", "Notifications" };
+	private String[] tabs = { "Rooms", "Profiles", "Notifications" };
 
 	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
@@ -64,7 +66,7 @@ public class MainActivity extends FragmentActivity implements
 				// on changing the page
 				// make respected tab selected
 				actionBar.setSelectedNavigationItem(position);
-                actionBar.setTitle("  " + actionBar.getSelectedTab().getText());
+                //actionBar.setTitle("  " + actionBar.getSelectedTab().getText());
 			}
 
 			@Override
@@ -75,6 +77,8 @@ public class MainActivity extends FragmentActivity implements
 			public void onPageScrollStateChanged(int arg0) {
 			}
 		});
+		
+		actionBar.setTitle("Options");
 	}
 
     @Override
@@ -103,12 +107,6 @@ public class MainActivity extends FragmentActivity implements
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    
-	public void newProfileButtonClick(View view) {
-		Intent newProfileActivity = new Intent(this, NewProfileActivity.class);
-		startActivity(newProfileActivity);
-	}
 	
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
@@ -125,4 +123,13 @@ public class MainActivity extends FragmentActivity implements
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 	}
 
+	// ---------- CUSTOM CLICKHANDLERS -----------
+	
+	/**
+	 * click handler when new profile button in profile fragment is clicked
+	 */
+	public void newProfileButtonClick(View view) {
+		Intent newProfileActivity = new Intent(this, NewProfileActivity.class);
+		startActivity(newProfileActivity);
+	}
 }

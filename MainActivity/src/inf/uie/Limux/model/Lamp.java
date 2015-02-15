@@ -37,4 +37,9 @@ public abstract class Lamp {
     public void off() {
         // TODO
     }
+    
+    // --------- SETTER&GETTER ----------
+    public String getName() {
+    	return name;
+    }
 }

@@ -7,8 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:textAlignment="center"
-    tools:context="inf.uie.Limux.activity.NewProfileActivity" >
+    tools:context="inf.uie.Limux.activity.EditProfileActivity" >
 
     <TextView
         android:id="@+id/title"
@@ -17,10 +16,21 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:gravity="center"
-        android:text="CREATE A NEW PROFILE"
+        android:text="EDIT PROFILE"
         android:textColor="#ffffff"
         android:textSize="20dp"
         android:textStyle="bold|normal" />
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="21dp"
+        android:background="#00000000"
+        android:onClick="doneButtonClick"
+        android:src="@drawable/done_button" />
 
     <EditText
         android:id="@+id/profileName"
@@ -28,7 +38,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="26dp"
         android:ems="10"
         android:hint="Name of Profile"
         android:textAlignment="center" />
@@ -46,9 +55,9 @@
     <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
         android:layout_below="@+id/profileName"
-        android:layout_marginTop="39dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="56dp"
         android:columnCount="1" >
 
         <GridLayout
@@ -57,7 +66,6 @@
             android:layout_gravity="left|top"
             android:layout_row="1"
             android:columnCount="3" >
-
         </GridLayout>
 
         <GridLayout
@@ -66,7 +74,6 @@
             android:layout_gravity="left|top"
             android:layout_row="3"
             android:columnCount="3" >
-
         </GridLayout>
 
         <RelativeLayout
@@ -92,7 +99,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/firstRoom"
                 android:background="#ffffff" />
-
         </RelativeLayout>
 
         <RelativeLayout
@@ -121,20 +127,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/secondRoom"
                 android:background="#ffffff" />
-
         </RelativeLayout>
-
     </GridLayout>
-
-    <ImageButton
-        android:id="@+id/imageButton1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:background="#00000000"
-        android:onClick="doneButtonClick"
-        android:src="@drawable/done_button" />
 
 </RelativeLayout>

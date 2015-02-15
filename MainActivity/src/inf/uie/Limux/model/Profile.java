@@ -1,7 +1,9 @@
 package inf.uie.Limux.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Marcel
@@ -27,26 +29,33 @@ public class Profile {
     /**
      * A list of colors available/used in this profile
      */
-    private List<Color> colorList;
+    private List<LampColor> usedColorsList;
 
     /**
-     * A list of lamps used in this profile
+     * A list of active lamps in this profile
      */
-    private List<Lamp> lampList;
+    private List<Lamp> activeLampsList;
 
     /**
      * A list of rooms used in this profile
      */
     private List<Room> roomList;
+    
+    /**
+     * HashMap that keeps lamp as key and chosen color as value
+     */
+    private HashMap<Lamp, LampColor> lampWithColorMap;
 
     // ---------- CONSTRUCTORS ----------
     public Profile(String name) {
         this.id = instanceCounter++;
         this.name = name;
 
-        this.colorList = new ArrayList<Color>();
-        this.lampList = new ArrayList<Lamp>();
+        this.usedColorsList = new ArrayList<LampColor>();
+        this.activeLampsList = new ArrayList<Lamp>();
         this.roomList = new ArrayList<Room>();
+        
+        lampWithColorMap = new HashMap<Lamp, LampColor>();
     }
 
     // ---------- METHODS ----------
@@ -57,36 +66,53 @@ public class Profile {
             Einschalten die Farbe/Helligkeit der Lampe setzen und vor allem speichern
             Vielleicht mit einer Map?
         */
-        for (Lamp lamp : lampList) {
+        for (Lamp lamp : activeLampsList) {
             lamp.on();
         }
     }
 
     public void disable() {
-        for (Lamp lamp : lampList) {
+        for (Lamp lamp : activeLampsList) {
             lamp.off();
         }
     }
 
-    public void addColor(Color color) {
-        colorList.add(color);
+    public void addColorForLamp(Lamp lamp, LampColor color) {
+    	if(lamp instanceof RGBLamp) {
+    		RGBLamp rgbLamp = (RGBLamp) lamp;
+    		rgbLamp.setColor(color);
+    	} else {
+    		// when lamp is no RGBLamp TODO
+    	}
+    	
+    	lampWithColorMap.put(lamp, color);
+        usedColorsList.add(color);
+    	activeLampsList.add(lamp);
     }
 
-    public void removeColor(Color color) {
-        colorList.remove(color);
-    }
-
-    public void addLamp(Lamp lamp) {
-        lampList.add(lamp);
-    }
-
-    public void removeLamp(Lamp lamp) {
-        lampList.remove(lamp);
+    public void removeColorOfLamp(Lamp lamp) {
+    	LampColor removedColor = lampWithColorMap.get(lamp);
+    	lampWithColorMap.remove(lamp);
+    	activeLampsList.remove(lamp);
+    	
+    	// iterate over all used colors of the profile, if color of deactivated lamp is still used by another lamp, keep it, otherwise delete it from usedColorsList
+    	for(LampColor color : lampWithColorMap.values()) {
+    		if(color.getColorCodeAsString().equals(removedColor.getColorCodeAsString())) break;
+    		usedColorsList.remove(removedColor);
+    	}
     }
     
     // ---------- GETTER&SETTER ---------- 
     
     public String getName() {
     	return name;
+    }
+    
+    public List<Lamp> getActiveLamps() {
+    	return activeLampsList;
+    }
+    
+    public List<LampColor> getUsedColors() {
+    	return usedColorsList;
     }
 }
