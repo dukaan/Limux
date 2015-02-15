@@ -196,7 +196,7 @@ public class ScanActivity extends Activity implements BeaconConsumer {
         inflater.inflate(R.menu.main_beacon_activity_actions, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
+    
     @Override
     public void onBeaconServiceConnect() {}
     
