@@ -77,10 +77,9 @@ public class Profile {
         }
     }
 
-    public void addColorForLamp(Lamp lamp, LampColor color) {
+    public void addColorForLamp(RGBLamp lamp, LampColor color) {
     	if(lamp instanceof RGBLamp) {
-    		RGBLamp rgbLamp = (RGBLamp) lamp;
-    		rgbLamp.setColor(color);
+    		lamp.setColor(color);
     	} else {
     		// when lamp is no RGBLamp TODO
     	}
@@ -114,5 +113,9 @@ public class Profile {
     
     public List<LampColor> getUsedColors() {
     	return usedColorsList;
+    }
+    
+    public Map<Lamp, LampColor> getLampWithColorMap() {
+    	return lampWithColorMap;
     }
 }

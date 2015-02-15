@@ -8,6 +8,7 @@ import inf.uie.Limux.model.LampColor;
 import inf.uie.Limux.model.House;
 import inf.uie.Limux.model.Lamp;
 import inf.uie.Limux.model.Profile;
+import inf.uie.Limux.model.RGBLamp;
 import inf.uie.Limux.model.Room;
 import android.app.Activity;
 import android.content.Intent;
@@ -82,7 +83,17 @@ public class EditProfileActivity extends Activity {
 					lampButton.setTextSize(10.f);
 					lampButton.setOnClickListener(lampClickListener);
 					
-					if(checkIfActiveLamp(lamp)) lampButton.setBackgroundColor(Color.BLUE);
+					
+					if(checkIfActiveLamp(lamp)) {
+						if(lamp instanceof RGBLamp) {
+							LampColor lampColor = currentProfile.getLampWithColorMap().get(lamp);
+							int color = Color.argb(255, lampColor.getRed(), lampColor.getGreen(), lampColor.getBlue());
+							lampButton.setBackgroundColor(color);
+						} else {
+							lampButton.setBackgroundColor(Color.WHITE);
+						}
+					}
+					
 					
 					((GridLayout) findViewById(R.id.livingRoomGrid)).addView(lampButton);
 				}
@@ -97,7 +108,16 @@ public class EditProfileActivity extends Activity {
 					lampButton.setTextSize(10.f);
 					lampButton.setOnClickListener(lampClickListener);
 					
-					if(checkIfActiveLamp(lamp)) lampButton.setBackgroundColor(Color.BLUE);
+					
+					if(checkIfActiveLamp(lamp)) {
+						if(lamp instanceof RGBLamp) {
+							LampColor lampColor = currentProfile.getLampWithColorMap().get(lamp);
+							int color = Color.argb(255, lampColor.getRed(), lampColor.getGreen(), lampColor.getBlue());
+							lampButton.setBackgroundColor(color);
+						} else {
+							lampButton.setBackgroundColor(Color.WHITE);
+						}
+					}
 					
 					((GridLayout) findViewById(R.id.bedRoomGrid)).addView(lampButton);
 				}

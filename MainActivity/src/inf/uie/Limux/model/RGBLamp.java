@@ -25,4 +25,8 @@ public class RGBLamp extends Lamp {
     public void setColor(LampColor color) {
         this.color = color;
     }
+    
+    public LampColor getLampColor() {
+    	return color;
+    }
 }
