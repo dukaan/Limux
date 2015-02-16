@@ -17,6 +17,8 @@ public abstract class Lamp {
      * Name of the lamp
      */
     private String name;
+    
+    private Room room;
 
     // ---------- CONSTRUCTORS ----------
     public Lamp() {
@@ -24,9 +26,11 @@ public abstract class Lamp {
         this.name = "";
     }
 
-    public Lamp(String name) {
+    public Lamp(String name, Room room) {
         this();
         this.name = name;
+        this.room = room;
+        room.addLamp(this);
     }
 
     // --------- METHODS ----------
@@ -41,5 +45,9 @@ public abstract class Lamp {
     // --------- SETTER&GETTER ----------
     public String getName() {
     	return name;
+    }
+    
+    public Room getRoom() {
+    	return room;
     }
 }

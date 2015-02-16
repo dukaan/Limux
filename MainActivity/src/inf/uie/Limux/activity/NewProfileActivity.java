@@ -6,10 +6,13 @@ import inf.uie.Limux.R.layout;
 import inf.uie.Limux.R.menu;
 import inf.uie.Limux.model.House;
 import inf.uie.Limux.model.Lamp;
+import inf.uie.Limux.model.LampColor;
 import inf.uie.Limux.model.Profile;
+import inf.uie.Limux.model.RGBLamp;
 import inf.uie.Limux.model.Room;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +20,7 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,6 +28,7 @@ import android.widget.TextView;
 public class NewProfileActivity extends Activity {
 	
 	private House myHouse;
+	private Profile currentProfile;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,13 @@ public class NewProfileActivity extends Activity {
 		setTitle("New Profile");
 		
 		myHouse = House.getInstance();
+		currentProfile = new Profile("");
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
 		showRoomsWithLamps();
 	}
 
@@ -61,6 +73,12 @@ public class NewProfileActivity extends Activity {
 	 */
 	private void showRoomsWithLamps() {
 		// TODO Auto-generated method stub
+		
+		// reset grid before adding again
+		((GridLayout) findViewById(R.id.livingRoomGrid)).removeAllViews();
+		((GridLayout) findViewById(R.id.bedRoomGrid)).removeAllViews();
+		
+		// show all lamps as buttons sorted by room
 		for(Room room : myHouse.getRooms()) {
 			if(room.getName() == "Wohnzimmer"){
 				TextView title = (TextView) findViewById(R.id.firstRoom);
@@ -72,6 +90,19 @@ public class NewProfileActivity extends Activity {
 					lampButton.setText(lamp.getName());
 					lampButton.setTextSize(10.f);
 					lampButton.setOnClickListener(lampClickListener);
+					
+					// set backgroundcolor of button according to lamp color when lamp is active
+					if(checkIfActiveLamp(lamp)) {
+						if(lamp instanceof RGBLamp) {
+							LampColor lampColor = currentProfile.getLampWithColorMap().get(lamp);
+							int color = Color.argb(255, lampColor.getRed(), lampColor.getGreen(), lampColor.getBlue());
+							lampButton.setBackgroundColor(color);
+						} else {
+							lampButton.setBackgroundColor(Color.WHITE);
+						}
+					}
+					
+					
 					((GridLayout) findViewById(R.id.livingRoomGrid)).addView(lampButton);
 				}
 			} else if(room.getName() == "Schlafzimmer") {
@@ -84,6 +115,18 @@ public class NewProfileActivity extends Activity {
 					lampButton.setText(lamp.getName());
 					lampButton.setTextSize(10.f);
 					lampButton.setOnClickListener(lampClickListener);
+					
+					// set backgroundcolor of button according to lamp color when lamp is active
+					if(checkIfActiveLamp(lamp)) {
+						if(lamp instanceof RGBLamp) {
+							LampColor lampColor = currentProfile.getLampWithColorMap().get(lamp);
+							int color = Color.argb(255, lampColor.getRed(), lampColor.getGreen(), lampColor.getBlue());
+							lampButton.setBackgroundColor(color);
+						} else {
+							lampButton.setBackgroundColor(Color.WHITE);
+						}
+					}
+					
 					((GridLayout) findViewById(R.id.bedRoomGrid)).addView(lampButton);
 				}
 			} else {
@@ -92,8 +135,27 @@ public class NewProfileActivity extends Activity {
 		}
 	}
 	
+	// checks if lamp is already active
+	private boolean checkIfActiveLamp(Lamp lamp) {
+		if(currentProfile != null) {
+			if(currentProfile.getActiveLamps().contains(lamp)) return true;
+		}
+		return false;
+	}
+	
 	public void doneButtonClick(View v) {
 		// TODO
+		// save changed name
+		EditText profileName = (EditText) findViewById(R.id.profileName); 
+		currentProfile.setName( profileName.getText().toString() );
+		
+		// add profile to all rooms which contains an active lamp
+		for(Lamp lamp : currentProfile.getActiveLamps()) {
+				lamp.getRoom().addProfile(currentProfile);
+		}
+		
+		// close activity and return to profilefragment
+		finish();
 	}
 	
 	OnClickListener lampClickListener = new OnClickListener() {
@@ -103,6 +165,12 @@ public class NewProfileActivity extends Activity {
 			// TODO Auto-generated method stub
 			Intent profileColorsActivity = new Intent(NewProfileActivity.this, ProfileColorsActivity.class);
 			profileColorsActivity.putExtra("lampName", ((Button) v).getText().toString());
+			profileColorsActivity.putExtra("profileName", currentProfile.getName());
+			
+			// add empty profile to room
+			Lamp lamp = myHouse.getLampByName(((Button) v).getText().toString());
+			lamp.getRoom().addProfile(currentProfile);
+			
 			startActivity(profileColorsActivity);
 		}
 	};

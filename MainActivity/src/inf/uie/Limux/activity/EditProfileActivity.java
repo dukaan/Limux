@@ -157,6 +157,11 @@ public class EditProfileActivity extends Activity {
 		EditText profileName = (EditText) findViewById(R.id.profileName); 
 		currentProfile.setName( profileName.getText().toString() );
 		
+		// add profile to all rooms which contains an active lamp
+		for(Lamp lamp : currentProfile.getActiveLamps()) {
+				lamp.getRoom().addProfile(currentProfile);
+		}
+		
 		// close activity and return to profilefragment
 		finish();
 		// TODO

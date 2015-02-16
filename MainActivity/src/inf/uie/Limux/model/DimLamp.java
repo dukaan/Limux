@@ -17,8 +17,8 @@ public class DimLamp extends Lamp {
         this.brightness = 0;
     }
 
-    public DimLamp(String name) {
-        super(name);
+    public DimLamp(String name, Room room) {
+        super(name, room);
         this.brightness = 0;
     }
 

@@ -1,6 +1,7 @@
 package inf.uie.Limux.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -48,10 +49,13 @@ public class House {
         LampColor green = new LampColor("Gruen", 0, 255, 0);
         LampColor blue = new LampColor("Blau", 0, 0, 255);
         
-        RGBLamp lamp1 = new RGBLamp("Lampe1");
-        RGBLamp lamp2 = new RGBLamp("Lampe2");
-        RGBLamp lamp3 = new RGBLamp("Lampe3");
-        RGBLamp lamp4 = new RGBLamp("Lampe4");
+        Room livingRoom = new Room("Wohnzimmer");
+        Room bedRoom = new Room("Schlafzimmer");
+        
+        RGBLamp lamp1 = new RGBLamp("Lampe1", livingRoom);
+        RGBLamp lamp2 = new RGBLamp("Lampe2", livingRoom);
+        RGBLamp lamp3 = new RGBLamp("Lampe3", bedRoom);
+        RGBLamp lamp4 = new RGBLamp("Lampe4", bedRoom);
         
         List<Lamp> livingRoomLamps = new ArrayList<Lamp>();
         livingRoomLamps.add(lamp1);
@@ -76,11 +80,10 @@ public class House {
         wake.addColorForLamp(lamp3, green);
         wake.addColorForLamp(lamp4, blue);
         
-        Room livingRoom = new Room("Wohnzimmer", livingRoomLamps);
+
         livingRoom.addProfile(chill);
         livingRoom.addProfile(eat);
         
-        Room bedRoom = new Room("Schlafzimmer", bedRoomLamps);
         bedRoom.addProfile(sleep);
         bedRoom.addProfile(wake);
         
@@ -122,9 +125,11 @@ public class House {
         }
     }
 
+    // ---------- GETTER & SETTER ----------
+    
     // returns a list of all profiles in the house
-    public List<Profile> getAllProfiles() {
-    	List<Profile> allProfiles = new ArrayList<Profile>();
+    public HashSet<Profile> getAllProfiles() {
+    	HashSet<Profile> allProfiles = new HashSet<Profile>();
     	
     	for (Room room : roomList) {
     		for (Profile profile : room.getProfiles()){
@@ -176,12 +181,20 @@ public class House {
     	return lamp;
     }
 
-    // ---------- GETTER & SETTER ----------
     public void setName(String name) {
         this.name = name;
     }
     
     public List<Room> getRooms() {
     	return roomList;
+    }
+    
+    public Room getRoomByName(String name) {
+    	for (Room room : getRooms()) {
+    		if (room.getName().equals(name)) {
+    			return room;
+    		}
+    	}
+    	return null;
     }
 }

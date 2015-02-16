@@ -16,8 +16,8 @@ public class RGBLamp extends Lamp {
         this.color = LampColor.WHITE;
     }
 
-    public RGBLamp(String name) {
-        super(name);
+    public RGBLamp(String name, Room room) {
+        super(name, room);
         this.color = LampColor.WHITE;
     }
 
