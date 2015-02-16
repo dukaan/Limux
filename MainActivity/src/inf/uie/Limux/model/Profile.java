@@ -111,6 +111,10 @@ public class Profile {
 
     }
     
+    public void addRoom(Room room) {
+    	roomList.add(room);
+    }
+    
     // ---------- GETTER&SETTER ---------- 
     
     public String getName() {
@@ -140,5 +144,9 @@ public class Profile {
     
     public Map<Lamp, LampColor> getLampWithColorMap() {
     	return lampWithColorMap;
+    }
+
+    public List<Room> getRooms() {
+    	return roomList;
     }
 }

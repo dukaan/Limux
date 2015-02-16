@@ -197,4 +197,10 @@ public class House {
     	}
     	return null;
     }
+    
+    public void removeAllProfiles() {
+    	for(Room room : getRooms()) {
+    		room.clearProfiles();;
+    	}
+    }
 }

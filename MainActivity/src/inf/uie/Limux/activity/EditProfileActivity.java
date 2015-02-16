@@ -158,6 +158,10 @@ public class EditProfileActivity extends Activity {
 		currentProfile.setName( profileName.getText().toString() );
 		
 		// add profile to all rooms which contains an active lamp
+		for(Room room : currentProfile.getRooms()) {
+			room.removeProfile(currentProfile);
+		}
+		
 		for(Lamp lamp : currentProfile.getActiveLamps()) {
 				lamp.getRoom().addProfile(currentProfile);
 		}

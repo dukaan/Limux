@@ -71,8 +71,15 @@ public class Room {
     	profileSet.remove(profile);
     }
     
+    public void clearProfiles() {
+    	profileSet.clear();
+    }
+    
     public void addProfile(Profile profile) {
     	profileSet.add(profile);
+    	
+    	// every profile keeps reference to room
+    	profile.addRoom(this);
     }
     
     public void addLamp(Lamp lamp) {
