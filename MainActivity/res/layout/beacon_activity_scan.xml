@@ -3,7 +3,7 @@
     android:id="@+id/scanActivityLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/dark_blue"
+    android:background="@color/normal_blue"
     tools:context="inf.uie.Limux.beacon.ScanActivity" >
 
     <TextView
@@ -29,5 +29,15 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:text="TextView" />
+
+    <GridLayout
+        android:id="@+id/profilesGrid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/roomTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp" >
+
+    </GridLayout>
     
 </RelativeLayout>

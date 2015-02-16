@@ -36,7 +36,7 @@ public class Profile {
     /**
      * A list of active lamps in this profile
      */
-    private List<Lamp> activeLampsList;
+    private HashSet<Lamp> activeLampsSet;
 
     /**
      * A list of rooms used in this profile
@@ -54,7 +54,7 @@ public class Profile {
         this.name = name;
 
         this.usedColorsSet = new HashSet<LampColor>();
-        this.activeLampsList = new ArrayList<Lamp>();
+        this.activeLampsSet = new HashSet<Lamp>();
         this.roomList = new ArrayList<Room>();
         
         lampWithColorMap = new HashMap<Lamp, LampColor>();
@@ -68,18 +68,19 @@ public class Profile {
             Einschalten die Farbe/Helligkeit der Lampe setzen und vor allem speichern
             Vielleicht mit einer Map?
         */
-        for (Lamp lamp : activeLampsList) {
+        for (Lamp lamp : activeLampsSet) {
             lamp.on();
         }
     }
 
     public void disable() {
-        for (Lamp lamp : activeLampsList) {
+        for (Lamp lamp : activeLampsSet) {
             lamp.off();
         }
     }
 
     public void addColorForLamp(RGBLamp lamp, LampColor color) {
+    	
     	if(lamp instanceof RGBLamp) {
     		lamp.setColor(color);
     	} else {
@@ -88,19 +89,26 @@ public class Profile {
     	
     	lampWithColorMap.put(lamp, color);
         usedColorsSet.add(color);
-    	activeLampsList.add(lamp);
+    	activeLampsSet.add(lamp);
     }
 
-    public void removeColorOfLamp(Lamp lamp) {
+    public void removeColorOfLamp(RGBLamp lamp) {
     	LampColor removedColor = lampWithColorMap.get(lamp);
-    	lampWithColorMap.remove(lamp);
-    	activeLampsList.remove(lamp);
     	
-    	// iterate over all used colors of the profile, if color of deactivated lamp is still used by another lamp, keep it, otherwise delete it from usedColorsList
-    	for(LampColor color : lampWithColorMap.values()) {
-    		if(color.getColorCodeAsString().equals(removedColor.getColorCodeAsString())) break;
-    		usedColorsSet.remove(removedColor);
+    	if (removedColor != null) {	
+        	lampWithColorMap.remove(lamp);
+        	activeLampsSet.remove(lamp);
+        	
+        	// after deleting last lamp no item is left in map, so the color has to be removed here
+        	if(lampWithColorMap.isEmpty()) usedColorsSet.remove(removedColor);
+        	
+        	// iterate over all used colors of the profile, if color of deactivated lamp is still used by another lamp, keep it, otherwise delete it from usedColorsList
+        	for(LampColor color : lampWithColorMap.values()) {
+        		if(color.getColorCodeAsString().equals(removedColor.getColorCodeAsString())) break;
+        		usedColorsSet.remove(removedColor);
+        	}
     	}
+
     }
     
     // ---------- GETTER&SETTER ---------- 
@@ -109,12 +117,25 @@ public class Profile {
     	return name;
     }
     
-    public List<Lamp> getActiveLamps() {
-    	return activeLampsList;
+    public void setName(String name) {
+    	this.name = name;
+    } 
+    
+    public HashSet<Lamp> getActiveLamps() {
+    	return activeLampsSet;
     }
     
     public HashSet<LampColor> getUsedColors() {
     	return usedColorsSet;
+    }
+    
+    public LampColor getColorByName(CharSequence charSequence) {
+    	for (LampColor color : getUsedColors()) {
+    		if(color.getName().equals(charSequence)) {
+    			return color;
+    		}
+    	}
+    	return null;
     }
     
     public Map<Lamp, LampColor> getLampWithColorMap() {

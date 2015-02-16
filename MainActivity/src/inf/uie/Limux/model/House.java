@@ -149,6 +149,32 @@ public class House {
     	
     	return profile;
     }
+    
+    public List<Lamp> getAllLamps() {
+    	List<Lamp> allLamps = new ArrayList<Lamp>();
+    	
+    	for (Room room : roomList) {
+    		for (Lamp lamp : room.getLamps()) {
+    			allLamps.add(lamp);
+    		}
+    	}
+    	
+    	return allLamps;
+    }
+    
+    public Lamp getLampByName(String name) {
+    	Lamp lamp = null;
+    	
+    	for (Lamp aLamp : getAllLamps()) {
+    		if(aLamp.getName().equals(name)) {
+    			lamp = aLamp;
+    			break;
+    		} else {
+    			lamp = null;
+    		}
+    	}
+    	return lamp;
+    }
 
     // ---------- GETTER & SETTER ----------
     public void setName(String name) {

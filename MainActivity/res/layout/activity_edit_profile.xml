@@ -40,7 +40,8 @@
         android:layout_centerHorizontal="true"
         android:ems="10"
         android:hint="Name of Profile"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="#ffffff" />
 
     <TextView
         android:id="@+id/textView1"
@@ -87,7 +88,7 @@
                 android:id="@+id/firstRoom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="Zimmer 1"
                 android:textColor="#ffffff" />
 
             <View
@@ -114,7 +115,7 @@
                 android:id="@+id/secondRoom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="Zimmer 2"
                 android:textColor="#ffffff" />
 
             <View

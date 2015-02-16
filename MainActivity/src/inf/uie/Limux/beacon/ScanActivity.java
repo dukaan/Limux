@@ -34,6 +34,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
@@ -79,10 +80,7 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 	
 	// house variable (singleton)
 	private House myHouse;
-	
-	// id counter to set unique id for profile buttons
-	private int profileButtonId;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,56 +130,31 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 						if(room.getName().contains("Wohnzimmer")) {
 							
 							// remove all existing buttons before adding new ones
-							for(int i=1;i<=profileButtonId;i++) {
-								((RelativeLayout) findViewById(R.id.scanActivityLayout)).removeView(findViewById(i));
-							}
-							// reset button ids
-							profileButtonId = 1;
+							((GridLayout) findViewById(R.id.profilesGrid)).removeAllViews();
 							
 							// iterate over all profiles of a room and add a button for each profile
 							for(Profile profile : room.getProfiles()) {
 								Button profileButton = new Button(ScanActivity.this);
-								profileButton.setId(profileButtonId);
-								RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-								if(profileButtonId == 1){
-									rl.addRule(RelativeLayout.BELOW, R.id.roomTitle);
-								} else {
-									rl.addRule(RelativeLayout.BELOW, profileButtonId - 1);
-								}
-								rl.addRule(RelativeLayout.CENTER_HORIZONTAL);
+								RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams(350, 250);
 								profileButton.setLayoutParams(rl);
 								profileButton.setText(profile.getName());
-								((RelativeLayout) findViewById(R.id.scanActivityLayout)).addView(profileButton);
-								profileButtonId++;
+								((GridLayout) findViewById(R.id.profilesGrid)).addView(profileButton);
 							}
 						}
 					}
 				} else {
 					for (Room room : myHouse.getRooms()) {
 						if(room.getName().contains("Schlafzimmer")) {
-							
 							// remove all existing buttons before adding new ones
-							for(int i=1;i<=profileButtonId;i++) {
-								((RelativeLayout) findViewById(R.id.scanActivityLayout)).removeView(findViewById(i));
-							}	
-							// reset button ids
-							profileButtonId = 1;
+							((GridLayout) findViewById(R.id.profilesGrid)).removeAllViews();
 							
 							// iterate over all profiles of a room and add a button for each profile
 							for(Profile profile : room.getProfiles()) {
 								Button profileButton = new Button(ScanActivity.this);
-								profileButton.setId(profileButtonId);
-								RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-								if(profileButtonId == 1){
-									rl.addRule(RelativeLayout.BELOW, R.id.roomTitle);
-								} else {
-									rl.addRule(RelativeLayout.BELOW, profileButtonId - 1);
-								}
-								rl.addRule(RelativeLayout.CENTER_HORIZONTAL);
+								RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams(350, 250);
 								profileButton.setLayoutParams(rl);
 								profileButton.setText(profile.getName());
-								((RelativeLayout) findViewById(R.id.scanActivityLayout)).addView(profileButton);
-								profileButtonId++;
+								((GridLayout) findViewById(R.id.profilesGrid)).addView(profileButton);
 							}
 						}
 					}

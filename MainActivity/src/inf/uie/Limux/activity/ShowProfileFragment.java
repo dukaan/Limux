@@ -36,6 +36,13 @@ public class ShowProfileFragment extends Fragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
+	}
+	
+	public void onResume() {
+		super.onResume();
+		
+		// remove old buttons before refreshing
+		((GridLayout) getView().findViewById(R.id.buttonGrid)).removeAllViews();
 		
 		// add a button for each existing profile in the house
 		for(inf.uie.Limux.model.Profile profile : myHouse.getAllProfiles()) {
@@ -47,8 +54,7 @@ public class ShowProfileFragment extends Fragment {
 			profileButton.setOnClickListener(profileButtonClickListener);
 			((GridLayout) getView().findViewById(R.id.buttonGrid)).addView(profileButton);
 		}
-		
-	}
+	};
 	
 	// onClickListener for every profile button which opens up "EditProfileActivity"
 	OnClickListener profileButtonClickListener = new OnClickListener() {

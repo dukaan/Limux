@@ -66,8 +66,12 @@
             android:label="@string/title_activity_profile_colors" >
         </activity>
         <activity
-            android:name="inf.uie.Limux.activity.EditProfileActivity"
+            android:name=".activity.EditProfileActivity"
             android:label="@string/title_activity_edit_profile" >
+        </activity>
+        <activity
+            android:name="inf.uie.Limux.activity.ColorPickerActivity"
+            android:label="@string/title_activity_color_picker" >
         </activity>
     </application>
 

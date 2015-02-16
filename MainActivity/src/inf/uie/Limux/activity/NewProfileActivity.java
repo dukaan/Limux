@@ -83,6 +83,7 @@ public class NewProfileActivity extends Activity {
 					lampButton.setLayoutParams(rl);
 					lampButton.setText(lamp.getName());
 					lampButton.setTextSize(10.f);
+					lampButton.setOnClickListener(lampClickListener);
 					((GridLayout) findViewById(R.id.bedRoomGrid)).addView(lampButton);
 				}
 			} else {

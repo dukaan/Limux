@@ -42,6 +42,16 @@ public class EditProfileActivity extends Activity {
 		profileNameEdit.setText(profileName);
 		
 		currentProfile = myHouse.getProfileByName(profileName);
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		
+		// refresh current profile, really needed? not sure
+		EditText profileNameEdit = (EditText) findViewById(R.id.profileName);
+		currentProfile = myHouse.getProfileByName(profileNameEdit.getText().toString());
 		
 		showRoomsWithLamps();
 	}
@@ -71,6 +81,12 @@ public class EditProfileActivity extends Activity {
 	 */
 	private void showRoomsWithLamps() {
 		// TODO Auto-generated method stub
+		
+		// reset grid before adding again
+		((GridLayout) findViewById(R.id.livingRoomGrid)).removeAllViews();
+		((GridLayout) findViewById(R.id.bedRoomGrid)).removeAllViews();
+		
+		// show all lamps as buttons sorted by room
 		for(Room room : myHouse.getRooms()) {
 			if(room.getName() == "Wohnzimmer"){
 				TextView title = (TextView) findViewById(R.id.firstRoom);
@@ -83,7 +99,7 @@ public class EditProfileActivity extends Activity {
 					lampButton.setTextSize(10.f);
 					lampButton.setOnClickListener(lampClickListener);
 					
-					
+					// set backgroundcolor of button according to lamp color when lamp is active
 					if(checkIfActiveLamp(lamp)) {
 						if(lamp instanceof RGBLamp) {
 							LampColor lampColor = currentProfile.getLampWithColorMap().get(lamp);
@@ -108,7 +124,7 @@ public class EditProfileActivity extends Activity {
 					lampButton.setTextSize(10.f);
 					lampButton.setOnClickListener(lampClickListener);
 					
-					
+					// set backgroundcolor of button according to lamp color when lamp is active
 					if(checkIfActiveLamp(lamp)) {
 						if(lamp instanceof RGBLamp) {
 							LampColor lampColor = currentProfile.getLampWithColorMap().get(lamp);
@@ -127,6 +143,7 @@ public class EditProfileActivity extends Activity {
 		}
 	}
 	
+	// checks if lamp is already active
 	private boolean checkIfActiveLamp(Lamp lamp) {
 		if(currentProfile != null) {
 			if(currentProfile.getActiveLamps().contains(lamp)) return true;
@@ -135,6 +152,13 @@ public class EditProfileActivity extends Activity {
 	}
 	
 	public void doneButtonClick(View v) {
+		
+		// save changed name
+		EditText profileName = (EditText) findViewById(R.id.profileName); 
+		currentProfile.setName( profileName.getText().toString() );
+		
+		// close activity and return to profilefragment
+		finish();
 		// TODO
 	}
 	

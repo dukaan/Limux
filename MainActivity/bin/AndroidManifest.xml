@@ -38,6 +38,8 @@
         </activity>
         <activity android:label="@string/title_activity_edit_profile" android:name="inf.uie.Limux.activity.EditProfileActivity">
         </activity>
+        <activity android:label="@string/title_activity_color_picker" android:name="inf.uie.Limux.activity.ColorPickerActivity">
+        </activity>
 
         <service android:enabled="true" android:exported="true" android:isolatedProcess="false" android:label="beacon" android:name="org.altbeacon.beacon.service.BeaconService">
         </service>

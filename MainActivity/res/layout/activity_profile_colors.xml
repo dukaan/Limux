@@ -39,6 +39,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         android:background="#00000000"
+        android:onClick="doneButtonClick"
         android:src="@drawable/done_button" />
 
     <GridLayout
@@ -60,6 +61,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="48dp"
         android:background="#00000000"
+        android:onClick="addNewColorClick"
         android:src="@drawable/add_icon" />
 
 </RelativeLayout>
