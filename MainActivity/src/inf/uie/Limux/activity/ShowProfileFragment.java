@@ -1,9 +1,20 @@
 package inf.uie.Limux.activity;
 
+import java.util.ArrayList;
+
+import android.R.integer;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.GradientDrawable.Orientation;
+import android.graphics.drawable.shapes.OvalShape;
+import android.graphics.drawable.shapes.Shape;
 import android.os.Bundle;
 import android.provider.ContactsContract.Profile;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +27,7 @@ import android.widget.RelativeLayout.LayoutParams;
 import inf.uie.Limux.R;
 import inf.uie.Limux.beacon.ScanActivity;
 import inf.uie.Limux.model.House;
+import inf.uie.Limux.model.LampColor;
 
 public class ShowProfileFragment extends Fragment {
 
@@ -47,10 +59,41 @@ public class ShowProfileFragment extends Fragment {
 		// add a button for each existing profile in the house
 		for(inf.uie.Limux.model.Profile profile : myHouse.getAllProfiles()) {
 			Button profileButton = new Button(getActivity());
-			LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(350, 150);
+			LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(250, 250);
 			profileButton.setLayoutParams(rl);
 			profileButton.setText(profile.getName());
 			profileButton.setTextSize(10.f);
+			profileButton.setTextColor(Color.WHITE);
+			
+			profileButton.setBackground(getResources().getDrawable(R.drawable.roundedbutton));
+			//GradientDrawable gd = (GradientDrawable) profileButton.getBackground();
+			
+			ArrayList<Integer> colorList = new ArrayList<Integer>();
+			for(LampColor color : profile.getUsedColors()) {
+				colorList.add(Color.argb(255, color.getRed(), color.getGreen(), color.getBlue()));
+			}
+			
+			int[] colorsInt = new int[colorList.size()];
+			
+
+			for(int i = 0; i<colorList.size(); i++) {
+					colorsInt[i] = colorList.get(i);
+					Log.i("Colors: ", profile.getName() + ": " + colorsInt[i]);
+			}
+			
+			
+
+			if(colorsInt.length > 1) {
+				GradientDrawable gd = new GradientDrawable(Orientation.LEFT_RIGHT, colorsInt);
+				gd.setStroke(6, Color.WHITE);
+				gd.setShape(GradientDrawable.OVAL);
+				profileButton.setBackground(gd);
+			} else {
+				((GradientDrawable) profileButton.getBackground()).setColor(colorsInt[0]);
+			}
+			
+			//gd.setColor(colorsInt[0]);
+			
 			profileButton.setOnClickListener(profileButtonClickListener);
 			((GridLayout) getView().findViewById(R.id.buttonGrid)).addView(profileButton);
 		}

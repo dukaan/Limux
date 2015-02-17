@@ -13,7 +13,11 @@ import android.R.bool;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -43,7 +47,7 @@ public class ProfileColorsActivity extends Activity {
 		
 		String lampName = lastIntent.getStringExtra("lampName");
 		TextView titleTextView = (TextView) findViewById(R.id.title);
-		titleTextView.append("\n" + lampName.toUpperCase());
+		titleTextView.append("\n" + lampName);
 		currentLamp = myHouse.getLampByName(lampName);
 		
 		String profileName = lastIntent.getStringExtra("profileName");
@@ -53,13 +57,19 @@ public class ProfileColorsActivity extends Activity {
 			if (!currentProfile.getUsedColors().isEmpty()) {
 				for (LampColor lampColor : currentProfile.getUsedColors()) {
 					Button colorButton = new Button(this);
-					LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(250, 250);
+					LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(175, 175);
 					colorButton.setLayoutParams(rl);
 					colorButton.setText(lampColor.getName());
 					colorButton.setTextSize(10.f);
+					colorButton.setTextColor(Color.WHITE);
+					
 					int color = Color.argb(255, lampColor.getRed(), lampColor.getGreen(), lampColor.getBlue());
-					colorButton.setBackgroundColor(color);
+					colorButton.setBackground(getResources().getDrawable(R.drawable.roundedbutton));
 					colorButton.getBackground().setAlpha(128);
+					GradientDrawable sd = (GradientDrawable) colorButton.getBackground();
+					sd.setColor(color);
+					
+					//colorButton.getBackground().setColorFilter(color, Mode.MULTIPLY);
 					colorButton.setOnClickListener(colorButtonOnClickListener);
 					((GridLayout) findViewById(R.id.colorGrid)).addView(colorButton);
 				}

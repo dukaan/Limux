@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import android.R.integer;
+import android.graphics.Color;
+
 /**
  * @author Marcel
  */

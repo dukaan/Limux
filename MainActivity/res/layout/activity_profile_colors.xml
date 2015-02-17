@@ -27,10 +27,12 @@
         android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
+        android:clipChildren="true"
+        android:clipToPadding="true"
         android:columnCount="3"
-        android:verticalSpacing="2dp" 
         android:horizontalSpacing="2dp"
-        android:clipChildren="true">
+        android:verticalSpacing="2dp" >
+
     </GridLayout>
 
     <ImageButton

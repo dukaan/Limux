@@ -13,12 +13,14 @@ import inf.uie.Limux.model.Room;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
@@ -43,6 +45,10 @@ public class EditProfileActivity extends Activity {
 		
 		currentProfile = myHouse.getProfileByName(profileName);
 		setTitle("Edit Profile");
+		
+		// prevent keyboard from opening automatically
+		getWindow().setSoftInputMode(
+			    WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 	}
 	
 	@Override

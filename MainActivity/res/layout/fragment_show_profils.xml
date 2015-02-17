@@ -5,38 +5,16 @@
     android:background="@color/normal_blue"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="46dp"
-        android:text="Edit your profiles with a click on the button."
-        android:textColor="#5597bc" />
-
     <ImageButton
         android:id="@+id/imageButton1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="10dp"
         android:background="#00000000"
         android:onClick="newProfileButtonClick"
         android:src="@drawable/add_icon" />
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="19dp"
-        android:gravity="center"
-        android:text="YOUR PROFILES"
-        android:textColor="#ffffff"
-        android:textSize="20dp"
-        android:textStyle="bold|normal" />
 
     <GridLayout
         android:id="@+id/buttonGrid"
@@ -47,5 +25,38 @@
         android:columnCount="3" >
 
     </GridLayout>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="7dp"
+        android:gravity="center"
+        android:text="You can edit exisiting profiles by clicking on a profile below or create a new one."
+        android:textColor="#5597bc" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/imageView1"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="Y O U R   P R O F I L E S"
+        android:textColor="#ffffff"
+        android:textSize="20dp"
+        android:textStyle="bold|normal" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/color_palette" />
 
 </RelativeLayout>
