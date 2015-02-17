@@ -68,7 +68,7 @@ public class Room {
     }
     
     public void removeProfile(Profile profile) {
-    	profileSet.remove(profile);
+    	if(profileSet.contains(profile)) profileSet.remove(profile);
     }
     
     public void clearProfiles() {

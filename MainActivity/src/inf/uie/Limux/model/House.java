@@ -124,7 +124,12 @@ public class House {
             room.allLampsOn();
         }
     }
-
+    
+    public void removeProfile(Profile profile) {
+    	for(Room room : getRooms()) {
+    		room.removeProfile(profile);
+    	}
+    }
     // ---------- GETTER & SETTER ----------
     
     // returns a list of all profiles in the house

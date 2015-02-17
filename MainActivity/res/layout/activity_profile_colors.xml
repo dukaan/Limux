@@ -9,35 +9,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="inf.uie.Limux.activity.ProfileColorsActivity" >
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:gravity="center"
-        android:text="PICK A COLOR FOR"
-        android:textColor="#ffffff"
-        android:textSize="20dp"
-        android:textStyle="bold|normal" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
-        android:layout_centerHorizontal="true"
-        android:text="Pick your desired color for chosen lamp."
-        android:textAlignment="center"
-        android:textColor="#5597bc" />
-
     <ImageButton
         android:id="@+id/imageButton1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="0dp"
         android:background="#00000000"
         android:onClick="doneButtonClick"
         android:src="@drawable/done_button" />
@@ -48,9 +26,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="124dp"
-        android:columnCount="3" >
-
+        android:layout_marginTop="30dp"
+        android:columnCount="3"
+        android:verticalSpacing="2dp" 
+        android:horizontalSpacing="2dp"
+        android:clipChildren="true">
     </GridLayout>
 
     <ImageButton
@@ -63,5 +43,40 @@
         android:background="#00000000"
         android:onClick="addNewColorClick"
         android:src="@drawable/add_icon" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="65dp"
+        android:gravity="center"
+        android:text="P I C K   A   C O L O R   F O R"
+        android:textColor="#ffffff"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="7dp"
+        android:gravity="center"
+        android:minLines="2"
+        android:text="Pick a desired color for the lamp. You can create a new color when clicking on the plus button. When no color is selected the lamp will be disabled."
+        android:textAlignment="center"
+        android:textColor="#5597bc" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/imageButton2"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/color_drop" />
 
 </RelativeLayout>

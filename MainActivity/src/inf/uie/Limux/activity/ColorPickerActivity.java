@@ -58,7 +58,10 @@ public class ColorPickerActivity extends Activity {
 		EditText blue = (EditText) findViewById(R.id.blueEditText);
 		EditText colorName = (EditText) findViewById(R.id.colorNameEditText);
 		
+		// create new color depending on picked color (rgb values)
 		LampColor color = new LampColor(colorName.getText().toString(), Integer.parseInt(red.getText().toString()), Integer.parseInt(green.getText().toString()), Integer.parseInt(blue.getText().toString()));
+		
+		// set color of lamp
 		currentProfile.addColorForLamp( (RGBLamp) currentLamp, color);
 		finish();
 	}

@@ -42,6 +42,7 @@ public class EditProfileActivity extends Activity {
 		profileNameEdit.setText(profileName);
 		
 		currentProfile = myHouse.getProfileByName(profileName);
+		setTitle("Edit Profile");
 	}
 	
 	@Override
@@ -157,7 +158,7 @@ public class EditProfileActivity extends Activity {
 		EditText profileName = (EditText) findViewById(R.id.profileName); 
 		currentProfile.setName( profileName.getText().toString() );
 		
-		// add profile to all rooms which contains an active lamp, also remove profile from room is no active lamp is in this particular room
+		// add profile to all rooms which contains an active lamp, also remove profile from room is no active lamp is in this particular room 
 		for(Room room : currentProfile.getRooms()) {
 			room.removeProfile(currentProfile);
 		}
@@ -169,6 +170,11 @@ public class EditProfileActivity extends Activity {
 		// close activity and return to profilefragment
 		finish();
 		// TODO
+	}
+	
+	public void deleteButtonClick(View v) {
+		myHouse.removeProfile(currentProfile);
+		finish();
 	}
 	
 	OnClickListener lampClickListener = new OnClickListener() {
