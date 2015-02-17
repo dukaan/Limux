@@ -68,6 +68,7 @@ public class ShowProfileFragment extends Fragment {
 			profileButton.setBackground(getResources().getDrawable(R.drawable.roundedbutton));
 			//GradientDrawable gd = (GradientDrawable) profileButton.getBackground();
 			
+			// create gradient background for profile buttons
 			ArrayList<Integer> colorList = new ArrayList<Integer>();
 			for(LampColor color : profile.getUsedColors()) {
 				colorList.add(Color.argb(255, color.getRed(), color.getGreen(), color.getBlue()));
@@ -75,13 +76,10 @@ public class ShowProfileFragment extends Fragment {
 			
 			int[] colorsInt = new int[colorList.size()];
 			
-
 			for(int i = 0; i<colorList.size(); i++) {
 					colorsInt[i] = colorList.get(i);
-					Log.i("Colors: ", profile.getName() + ": " + colorsInt[i]);
+					//Log.i("Colors: ", profile.getName() + ": " + colorsInt[i]);
 			}
-			
-			
 
 			if(colorsInt.length > 1) {
 				GradientDrawable gd = new GradientDrawable(Orientation.LEFT_RIGHT, colorsInt);
@@ -91,8 +89,6 @@ public class ShowProfileFragment extends Fragment {
 			} else {
 				((GradientDrawable) profileButton.getBackground()).setColor(colorsInt[0]);
 			}
-			
-			//gd.setColor(colorsInt[0]);
 			
 			profileButton.setOnClickListener(profileButtonClickListener);
 			((GridLayout) getView().findViewById(R.id.buttonGrid)).addView(profileButton);

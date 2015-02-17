@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.TextureView;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,6 +39,10 @@ public class NewProfileActivity extends Activity {
 		
 		myHouse = House.getInstance();
 		currentProfile = new Profile("");
+		
+		// prevent keyboard from opening automatically
+		getWindow().setSoftInputMode(
+			    WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 	}
 	
 	@Override
@@ -91,12 +96,20 @@ public class NewProfileActivity extends Activity {
 					lampButton.setTextSize(10.f);
 					lampButton.setOnClickListener(lampClickListener);
 					
+					// coloring
+					lampButton.setTextColor(Color.argb(255, 39, 72, 118));
+					lampButton.setBackgroundColor(Color.argb(30, 255, 255, 255));
+					
+					// put label to the bottom
+					lampButton.setPadding(0, 175, 0, 0);
+					
 					// set backgroundcolor of button according to lamp color when lamp is active
 					if(checkIfActiveLamp(lamp)) {
 						if(lamp instanceof RGBLamp) {
 							LampColor lampColor = currentProfile.getLampWithColorMap().get(lamp);
 							int color = Color.argb(255, lampColor.getRed(), lampColor.getGreen(), lampColor.getBlue());
 							lampButton.setBackgroundColor(color);
+							lampButton.setTextColor(Color.argb(255, 255, 255, 255));
 						} else {
 							lampButton.setBackgroundColor(Color.WHITE);
 						}
@@ -116,12 +129,20 @@ public class NewProfileActivity extends Activity {
 					lampButton.setTextSize(10.f);
 					lampButton.setOnClickListener(lampClickListener);
 					
+					// coloring
+					lampButton.setTextColor(Color.argb(255, 39, 72, 118));
+					lampButton.setBackgroundColor(Color.argb(30, 255, 255, 255));
+					
+					// put label to the bottom
+					lampButton.setPadding(0, 175, 0, 0);
+					
 					// set backgroundcolor of button according to lamp color when lamp is active
 					if(checkIfActiveLamp(lamp)) {
 						if(lamp instanceof RGBLamp) {
 							LampColor lampColor = currentProfile.getLampWithColorMap().get(lamp);
 							int color = Color.argb(255, lampColor.getRed(), lampColor.getGreen(), lampColor.getBlue());
 							lampButton.setBackgroundColor(color);
+							lampButton.setTextColor(Color.argb(255, 255, 255, 255));
 						} else {
 							lampButton.setBackgroundColor(Color.WHITE);
 						}
@@ -159,6 +180,11 @@ public class NewProfileActivity extends Activity {
 		}
 		
 		// close activity and return to profilefragment
+		finish();
+	}
+	
+	public void deleteButtonClick(View v) {
+		myHouse.removeProfile(currentProfile);
 		finish();
 	}
 	

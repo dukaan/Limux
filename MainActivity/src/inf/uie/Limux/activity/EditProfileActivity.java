@@ -12,7 +12,9 @@ import inf.uie.Limux.model.RGBLamp;
 import inf.uie.Limux.model.Room;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -106,17 +108,24 @@ public class EditProfileActivity extends Activity {
 					lampButton.setTextSize(10.f);
 					lampButton.setOnClickListener(lampClickListener);
 					
+					// coloring
+					lampButton.setTextColor(Color.argb(255, 39, 72, 118));
+					lampButton.setBackgroundColor(Color.argb(30, 255, 255, 255));
+					
+					// put label to the bottom
+					lampButton.setPadding(0, 175, 0, 0);
+					
 					// set backgroundcolor of button according to lamp color when lamp is active
 					if(checkIfActiveLamp(lamp)) {
 						if(lamp instanceof RGBLamp) {
 							LampColor lampColor = currentProfile.getLampWithColorMap().get(lamp);
 							int color = Color.argb(255, lampColor.getRed(), lampColor.getGreen(), lampColor.getBlue());
 							lampButton.setBackgroundColor(color);
+							lampButton.setTextColor(Color.argb(255, 255, 255, 255));
 						} else {
 							lampButton.setBackgroundColor(Color.WHITE);
 						}
-					}
-					
+					}	
 					
 					((GridLayout) findViewById(R.id.livingRoomGrid)).addView(lampButton);
 				}
@@ -131,14 +140,21 @@ public class EditProfileActivity extends Activity {
 					lampButton.setTextSize(10.f);
 					lampButton.setOnClickListener(lampClickListener);
 					
+					// coloring
+					lampButton.setTextColor(Color.argb(255, 39, 72, 118));
+					lampButton.setBackgroundColor(Color.argb(30, 255, 255, 255));
+					lampButton.setPadding(0, 175, 0, 0);
+					
 					// set backgroundcolor of button according to lamp color when lamp is active
 					if(checkIfActiveLamp(lamp)) {
 						if(lamp instanceof RGBLamp) {
 							LampColor lampColor = currentProfile.getLampWithColorMap().get(lamp);
 							int color = Color.argb(255, lampColor.getRed(), lampColor.getGreen(), lampColor.getBlue());
 							lampButton.setBackgroundColor(color);
+							lampButton.setTextColor(Color.argb(255, 255, 255, 255));
 						} else {
 							lampButton.setBackgroundColor(Color.WHITE);
+							lampButton.setTextColor(Color.argb(255, 255, 255, 255));
 						}
 					}
 					
