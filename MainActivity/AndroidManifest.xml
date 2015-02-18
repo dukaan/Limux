@@ -15,7 +15,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Holo" >
+        android:theme="@style/AppBaseTheme" >
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name" >
@@ -54,8 +54,24 @@
                 android:value=".beacon.ScanActivity" />
         </activity>
         <activity
-            android:name="inf.uie.Limux.beacon.MainScreenActivity"
+            android:name=".beacon.MainScreenActivity"
             android:label="@string/title_activity_main_screen" >
+        </activity>
+        <activity
+            android:name=".activity.NewProfileActivity"
+            android:label="@string/title_activity_new_profile" >
+        </activity>
+        <activity
+            android:name=".activity.ProfileColorsActivity"
+            android:label="@string/title_activity_profile_colors" >
+        </activity>
+        <activity
+            android:name=".activity.EditProfileActivity"
+            android:label="@string/title_activity_edit_profile" >
+        </activity>
+        <activity
+            android:name="inf.uie.Limux.activity.ColorPickerActivity"
+            android:label="@string/title_activity_color_picker" >
         </activity>
     </application>
 

@@ -1,6 +1,7 @@
 package inf.uie.Limux.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -44,10 +45,17 @@ public class House {
         this.roomList = new ArrayList<Room>();
         
         // initialize sample data for testing
-        Lamp lamp1 = new RGBLamp();
-        Lamp lamp2 = new RGBLamp();
-        Lamp lamp3 = new RGBLamp();
-        Lamp lamp4 = new RGBLamp();
+        LampColor red = new LampColor("Rot", 255, 0, 0);
+        LampColor green = new LampColor("Gruen", 0, 255, 0);
+        LampColor blue = new LampColor("Blau", 0, 0, 255);
+        
+        Room livingRoom = new Room("Wohnzimmer");
+        Room bedRoom = new Room("Schlafzimmer");
+        
+        RGBLamp lamp1 = new RGBLamp("Lampe1", livingRoom);
+        RGBLamp lamp2 = new RGBLamp("Lampe2", livingRoom);
+        RGBLamp lamp3 = new RGBLamp("Lampe3", bedRoom);
+        RGBLamp lamp4 = new RGBLamp("Lampe4", bedRoom);
         
         List<Lamp> livingRoomLamps = new ArrayList<Lamp>();
         livingRoomLamps.add(lamp1);
@@ -57,14 +65,27 @@ public class House {
         bedRoomLamps.add(lamp3);
         bedRoomLamps.add(lamp4);
         
+        Profile chill = new Profile("Chillen");
+        chill.addColorForLamp(lamp1, red);
+        chill.addColorForLamp(lamp2, green);
         
-        Room livingRoom = new Room("Wohnzimmer", livingRoomLamps);
-        livingRoom.addProfile(new Profile("Chillen"));
-        livingRoom.addProfile(new Profile("Essen"));
+        Profile eat = new Profile("Essen");
+        eat.addColorForLamp(lamp2, blue);
+        eat.addColorForLamp(lamp1, blue);
         
-        Room bedRoom = new Room("Schlafzimmer", bedRoomLamps);
-        bedRoom.addProfile(new Profile("Einschlafen"));
-        bedRoom.addProfile(new Profile("Aufwachen"));
+        Profile sleep = new Profile("Einschlafen");
+        sleep.addColorForLamp(lamp3, red);
+        
+        Profile wake = new Profile("Aufwachen");
+        wake.addColorForLamp(lamp3, green);
+        wake.addColorForLamp(lamp4, blue);
+        
+
+        livingRoom.addProfile(chill);
+        livingRoom.addProfile(eat);
+        
+        bedRoom.addProfile(sleep);
+        bedRoom.addProfile(wake);
         
         roomList.add(livingRoom);
         roomList.add(bedRoom);
@@ -103,10 +124,17 @@ public class House {
             room.allLampsOn();
         }
     }
-
+    
+    public void removeProfile(Profile profile) {
+    	for(Room room : getRooms()) {
+    		room.removeProfile(profile);
+    	}
+    }
+    // ---------- GETTER & SETTER ----------
+    
     // returns a list of all profiles in the house
-    public List<Profile> getAllProfiles() {
-    	List<Profile> allProfiles = new ArrayList<Profile>();
+    public HashSet<Profile> getAllProfiles() {
+    	HashSet<Profile> allProfiles = new HashSet<Profile>();
     	
     	for (Room room : roomList) {
     		for (Profile profile : room.getProfiles()){
@@ -116,13 +144,68 @@ public class House {
     	
         return allProfiles;
     }
+    
+    public Profile getProfileByName(String name) {
+    	Profile profile = null;
+    	
+    	for (Profile p : getAllProfiles()) {
+    		if(p.getName().equals(name)) {
+    			profile = p;
+    			break;
+    		} else {
+    			profile = null;
+    		} 
+    	}
+    	
+    	return profile;
+    }
+    
+    public List<Lamp> getAllLamps() {
+    	List<Lamp> allLamps = new ArrayList<Lamp>();
+    	
+    	for (Room room : roomList) {
+    		for (Lamp lamp : room.getLamps()) {
+    			allLamps.add(lamp);
+    		}
+    	}
+    	
+    	return allLamps;
+    }
+    
+    public Lamp getLampByName(String name) {
+    	Lamp lamp = null;
+    	
+    	for (Lamp aLamp : getAllLamps()) {
+    		if(aLamp.getName().equals(name)) {
+    			lamp = aLamp;
+    			break;
+    		} else {
+    			lamp = null;
+    		}
+    	}
+    	return lamp;
+    }
 
-    // ---------- GETTER & SETTER ----------
     public void setName(String name) {
         this.name = name;
     }
     
     public List<Room> getRooms() {
     	return roomList;
+    }
+    
+    public Room getRoomByName(String name) {
+    	for (Room room : getRooms()) {
+    		if (room.getName().equals(name)) {
+    			return room;
+    		}
+    	}
+    	return null;
+    }
+    
+    public void removeAllProfiles() {
+    	for(Room room : getRooms()) {
+    		room.clearProfiles();;
+    	}
     }
 }

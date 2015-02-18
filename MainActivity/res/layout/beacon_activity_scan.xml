@@ -3,16 +3,8 @@
     android:id="@+id/scanActivityLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/dark_blue"
+    android:background="@drawable/background"
     tools:context="inf.uie.Limux.beacon.ScanActivity" >
-
-    <Button
-        android:id="@+id/scanButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:onClick="onScanButtonClicked" />
 
     <TextView
         android:id="@+id/roomTitle"
@@ -22,12 +14,31 @@
         android:layout_centerHorizontal="true"
         android:text="Room Title" />
 
+    <Button
+        android:id="@+id/scanButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="onScanButtonClicked" />
+
     <TextView
-        android:id="@+id/profilesTextView"
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="Profiles" />
+        android:text="TextView" />
+
+    <GridLayout
+        android:id="@+id/profilesGrid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/roomTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:columnCount="2" >
+
+    </GridLayout>
     
 </RelativeLayout>

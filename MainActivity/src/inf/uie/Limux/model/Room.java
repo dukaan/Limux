@@ -1,6 +1,7 @@
 package inf.uie.Limux.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -32,14 +33,14 @@ public class Room {
     /**
      * A list with all the profiles defined for this room
      */
-    private List<Profile> profileList;
+    private HashSet<Profile> profileSet;
 
     // ---------- CONSTRUCTORS ----------
-    public Room(String name, List<Lamp> lamps) {
+    public Room(String name) {
         this.id = instanceCounter++;
         this.name = name;
-        this.lampList = lamps;
-        this.profileList = new ArrayList<Profile>();
+        this.lampList = new ArrayList<Lamp>();
+        this.profileSet = new HashSet<Profile>();
     }
 
     // ---------- METHODS ----------
@@ -62,21 +63,36 @@ public class Room {
         }
     }
     
-    public List<Profile> getProfiles() {
-    	return profileList;
+    public HashSet<Profile> getProfiles() {
+    	return profileSet;
     }
     
     public void removeProfile(Profile profile) {
-    	profileList.remove(profile);
+    	if(profileSet.contains(profile)) profileSet.remove(profile);
+    }
+    
+    public void clearProfiles() {
+    	profileSet.clear();
     }
     
     public void addProfile(Profile profile) {
-    	profileList.add(profile);
+    	profileSet.add(profile);
+    	
+    	// every profile keeps reference to room
+    	profile.addRoom(this);
+    }
+    
+    public void addLamp(Lamp lamp) {
+    	lampList.add(lamp);
     }
     
     // ---------- GETTER&SETTER ---------- 
     
     public String getName() {
     	return name;
+    }
+    
+    public List<Lamp> getLamps() {
+    	return lampList;
     }
 }

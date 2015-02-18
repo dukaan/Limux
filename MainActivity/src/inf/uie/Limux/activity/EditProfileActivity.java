@@ -4,41 +4,49 @@ import inf.uie.Limux.R;
 import inf.uie.Limux.R.id;
 import inf.uie.Limux.R.layout;
 import inf.uie.Limux.R.menu;
+import inf.uie.Limux.model.LampColor;
 import inf.uie.Limux.model.House;
 import inf.uie.Limux.model.Lamp;
-import inf.uie.Limux.model.LampColor;
 import inf.uie.Limux.model.Profile;
 import inf.uie.Limux.model.RGBLamp;
 import inf.uie.Limux.model.Room;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.TextureView;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class NewProfileActivity extends Activity {
+public class EditProfileActivity extends Activity {
 	
-	private House myHouse;
-	private Profile currentProfile;
-
+	private House myHouse = House.getInstance();
+	private Profile currentProfile = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_new_profile);
-		setTitle("New Profile");
+		setContentView(R.layout.activity_edit_profile);
 		
-		myHouse = House.getInstance();
-		currentProfile = new Profile("");
+		// set profile name in edit field
+		Intent lastIntent = getIntent();
+		String profileName = lastIntent.getStringExtra("profileName");
+		EditText profileNameEdit = (EditText) findViewById(R.id.profileName);
+		profileNameEdit.setText(profileName);
+		
+		currentProfile = myHouse.getProfileByName(profileName);
+		setTitle("Edit Profile");
 		
 		// prevent keyboard from opening automatically
 		getWindow().setSoftInputMode(
@@ -49,13 +57,18 @@ public class NewProfileActivity extends Activity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		
+		// refresh current profile, really needed? not sure
+		EditText profileNameEdit = (EditText) findViewById(R.id.profileName);
+		currentProfile = myHouse.getProfileByName(profileNameEdit.getText().toString());
+		
 		showRoomsWithLamps();
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.new_profile, menu);
+		getMenuInflater().inflate(R.menu.edit_profile, menu);
 		return true;
 	}
 
@@ -71,8 +84,7 @@ public class NewProfileActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
-	// --------- CUSTOM METHODS ---------
-	
+	// ------- CUSTOM METHODS --------
 	/**
 	 * rooms are hard coded for now (initialized in House.class)
 	 */
@@ -113,8 +125,7 @@ public class NewProfileActivity extends Activity {
 						} else {
 							lampButton.setBackgroundColor(Color.WHITE);
 						}
-					}
-					
+					}	
 					
 					((GridLayout) findViewById(R.id.livingRoomGrid)).addView(lampButton);
 				}
@@ -132,8 +143,6 @@ public class NewProfileActivity extends Activity {
 					// coloring
 					lampButton.setTextColor(Color.argb(255, 39, 72, 118));
 					lampButton.setBackgroundColor(Color.argb(30, 255, 255, 255));
-					
-					// put label to the bottom
 					lampButton.setPadding(0, 175, 0, 0);
 					
 					// set backgroundcolor of button according to lamp color when lamp is active
@@ -145,6 +154,7 @@ public class NewProfileActivity extends Activity {
 							lampButton.setTextColor(Color.argb(255, 255, 255, 255));
 						} else {
 							lampButton.setBackgroundColor(Color.WHITE);
+							lampButton.setTextColor(Color.argb(255, 255, 255, 255));
 						}
 					}
 					
@@ -165,12 +175,12 @@ public class NewProfileActivity extends Activity {
 	}
 	
 	public void doneButtonClick(View v) {
-		// TODO
+		
 		// save changed name
 		EditText profileName = (EditText) findViewById(R.id.profileName); 
 		currentProfile.setName( profileName.getText().toString() );
 		
-		// add profile to all rooms which contains an active lamp
+		// add profile to all rooms which contains an active lamp, also remove profile from room is no active lamp is in this particular room 
 		for(Room room : currentProfile.getRooms()) {
 			room.removeProfile(currentProfile);
 		}
@@ -181,6 +191,7 @@ public class NewProfileActivity extends Activity {
 		
 		// close activity and return to profilefragment
 		finish();
+		// TODO
 	}
 	
 	public void deleteButtonClick(View v) {
@@ -193,16 +204,10 @@ public class NewProfileActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			Intent profileColorsActivity = new Intent(NewProfileActivity.this, ProfileColorsActivity.class);
+			Intent profileColorsActivity = new Intent(EditProfileActivity.this, ProfileColorsActivity.class);
 			profileColorsActivity.putExtra("lampName", ((Button) v).getText().toString());
 			profileColorsActivity.putExtra("profileName", currentProfile.getName());
-			
-			// add empty profile to room
-			Lamp lamp = myHouse.getLampByName(((Button) v).getText().toString());
-			lamp.getRoom().addProfile(currentProfile);
-			
 			startActivity(profileColorsActivity);
 		}
 	};
-	
- }
+}

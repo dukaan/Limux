@@ -8,21 +8,25 @@ public class RGBLamp extends Lamp {
     /**
      * Color of the light
      */
-    private Color color;
+    private LampColor color;
 
     // ---------- CONSTRUCTORS ----------
     public RGBLamp() {
         super();
-        this.color = Color.WHITE;
+        this.color = LampColor.WHITE;
     }
 
-    public RGBLamp(String name) {
-        super(name);
-        this.color = Color.WHITE;
+    public RGBLamp(String name, Room room) {
+        super(name, room);
+        this.color = LampColor.WHITE;
     }
 
     // --------- GETTER & SETTER ----------
-    public void setColor(Color color) {
+    public void setColor(LampColor color) {
         this.color = color;
+    }
+    
+    public LampColor getLampColor() {
+    	return color;
     }
 }

@@ -3,7 +3,7 @@ package inf.uie.Limux.model;
 /**
  * @author Marcel
  */
-public class Color {
+public class LampColor {
     // ---------- STATIC MEMBERS ----------
     /**
      * Counts how much instances have been initiated. Used for id incrementation
@@ -11,10 +11,10 @@ public class Color {
     private static int instanceCounter;
 
     // sample colors
-    public final static Color WHITE;
+    public final static LampColor WHITE;
 
     static {
-        WHITE = new Color("white", 255, 255, 255);
+        WHITE = new LampColor("white", 255, 255, 255);
     }
 
     // ---------- MEMBERS ----------
@@ -47,7 +47,7 @@ public class Color {
      * @param b blue value of color (from 0 to 255)
      * @throws java.lang.IllegalArgumentException if params are not in the given range
      */
-    public Color(int r, int g, int b) {
+    public LampColor(int r, int g, int b) {
         this.id = instanceCounter++;
         this.name = "";
 
@@ -71,7 +71,7 @@ public class Color {
         }
     }
 
-    public Color(String name, int r, int g, int b) {
+    public LampColor(String name, int r, int g, int b) {
         this(r, g, b);
         this.name = name;
     }
@@ -87,5 +87,17 @@ public class Color {
 
     public int getBlue() {
         return blue;
+    }
+    
+    public String getColorCodeAsString() {
+    	String hexCode = "";
+    	
+    	hexCode = "" + red + green + blue;
+    	
+    	return hexCode;
+    }
+    
+    public String getName() {
+    	return name;
     }
 }

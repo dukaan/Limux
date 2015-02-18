@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
-    <application android:allowBackup="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:name="inf.uie.Limux.beacon.BeaconScannerApp" android:theme="@android:style/Theme.Holo">
+    <application android:allowBackup="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:name="inf.uie.Limux.beacon.BeaconScannerApp" android:theme="@style/AppBaseTheme">
         <activity android:label="@string/app_name" android:name="inf.uie.Limux.activity.MainActivity">
         </activity>
         <activity android:label="@string/title_activity_bluetoothdapter" android:name="inf.uie.Limux.bluetooth.Bluetooth">
@@ -31,6 +31,14 @@
             <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".beacon.ScanActivity"/>
         </activity>
         <activity android:label="@string/title_activity_main_screen" android:name="inf.uie.Limux.beacon.MainScreenActivity">
+        </activity>
+        <activity android:label="@string/title_activity_new_profile" android:name="inf.uie.Limux.activity.NewProfileActivity">
+        </activity>
+        <activity android:label="@string/title_activity_profile_colors" android:name="inf.uie.Limux.activity.ProfileColorsActivity">
+        </activity>
+        <activity android:label="@string/title_activity_edit_profile" android:name="inf.uie.Limux.activity.EditProfileActivity">
+        </activity>
+        <activity android:label="@string/title_activity_color_picker" android:name="inf.uie.Limux.activity.ColorPickerActivity">
         </activity>
 
         <service android:enabled="true" android:exported="true" android:isolatedProcess="false" android:label="beacon" android:name="org.altbeacon.beacon.service.BeaconService">
