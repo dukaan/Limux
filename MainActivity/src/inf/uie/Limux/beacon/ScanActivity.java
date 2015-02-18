@@ -60,7 +60,7 @@ import android.widget.Toast;
  *
  */
 public class ScanActivity extends Activity implements BeaconConsumer {
-    
+
 	// Constant Declaration
 	private static final String PREFERENCE_SCANINTERVAL = "scanInterval";
 	private static final String PREFERENCE_TIMESTAMP = "timestamp";
@@ -73,14 +73,14 @@ public class ScanActivity extends Activity implements BeaconConsumer {
     private static final String MODE_SCANNING = "Stop Scanning";
     private static final String MODE_STOPPED = "Start Scanning";
     protected static final String TAG = "ScanActivity";
-    
+
     private BeaconManager beaconManager;
-    private Region region; 
+    private Region region;
     private int eventNum = 1;
-    
-    // This StringBuffer will hold the scan data for any given scan.  
+
+    // This StringBuffer will hold the scan data for any given scan.
     private StringBuffer logString;
-   
+
     // Preferences - will actually have a boolean value when loaded.
     private Boolean index;
     private Boolean uuid;
@@ -90,7 +90,7 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 	private Boolean power;
 	private Boolean timestamp;
 	private String scanInterval;
-	
+
 	// house variable (singleton)
 	private House myHouse;
 	private Bluetooth bluetooth;
@@ -100,8 +100,8 @@ public class ScanActivity extends Activity implements BeaconConsumer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 		setContentView(R.layout.beacon_activity_scan);
-	
-		
+
+
 		verifyBluetooth();
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		BeaconScannerApp app = (BeaconScannerApp)this.getApplication();
@@ -112,12 +112,12 @@ public class ScanActivity extends Activity implements BeaconConsumer {
         beaconManager.getBeaconParsers().add(new BeaconParser().
                 setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
 		beaconManager.bind(this);
-		
+
 		region = new Region("myRangingUniqueId", null, null, null);
 
 		// Initialize scan button.
 		getScanButton().setText(MODE_STOPPED);
-		
+
 		myHouse = House.getInstance();
 		try {
 			bluetooth = Bluetooth.getInstance();
@@ -125,86 +125,25 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		// adding onChangeListener for TextView to show profiles of the nearest room
 		TextView title = (TextView) ScanActivity.this.findViewById(R.id.roomTitle);
-		
-		
-		// HIER TEST
-		// remove all existing buttons before adding new ones
-		((GridLayout) findViewById(R.id.profilesGrid)).removeAllViews();
-		
-		// add a button for each existing profile in the house
-				for(inf.uie.Limux.model.Profile profile : myHouse.getAllProfiles()) {
-					LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(200, 200);
-					rl.setMargins(15, 15, 15, 15);
-					Button profileButton = new Button(ScanActivity.this);
-					profileButton.setLayoutParams(rl);
-					profileButton.setText(profile.getName());
-					profileButton.setTextSize(10.f);
-					profileButton.setTextColor(Color.WHITE);
-					
-					profileButton.setBackground(getResources().getDrawable(R.drawable.roundedbutton));
-					//GradientDrawable gd = (GradientDrawable) profileButton.getBackground();
-					
-					// create gradient background for profile buttons
-					ArrayList<Integer> colorList = new ArrayList<Integer>();
-					for(LampColor color : profile.getUsedColors()) {
-						colorList.add(Color.argb(255, color.getRed(), color.getGreen(), color.getBlue()));
-					}
-					
-					int[] colorsInt = new int[colorList.size()];
-					
-					for(int i = 0; i<colorList.size(); i++) {
-							colorsInt[i] = colorList.get(i);
-							//Log.i("Colors: ", profile.getName() + ": " + colorsInt[i]);
-					}
 
-					if(colorsInt.length > 1) {
-						GradientDrawable gd = new GradientDrawable(Orientation.LEFT_RIGHT, colorsInt);
-						gd.setStroke(6, Color.WHITE);
-						gd.setShape(GradientDrawable.OVAL);
-						profileButton.setBackground(gd);
-					} else {
-						((GradientDrawable) profileButton.getBackground()).setColor(colorsInt[0]);
-					}
-					profileButton.setOnClickListener(profileButtonClickListener);
-					profileButton.requestLayout();
-					((GridLayout) findViewById(R.id.profilesGrid)).addView(profileButton);
-				}
-				
-				LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(200, 200);
-				rl.setMargins(5, 5, 5, 5);
-				Button closeButton = new Button(ScanActivity.this);
-				closeButton.setLayoutParams(rl);
-				closeButton.setText("Off");
-				closeButton.setTextSize(10.f);
-				closeButton.setTextColor(Color.WHITE);
-				
-				closeButton.setBackground(getResources().getDrawable(R.drawable.roundedbutton));
-				closeButton.setOnClickListener(closeButtonClickListener);
-				closeButton.requestLayout();
-				((GridLayout) findViewById(R.id.profilesGrid)).addView(closeButton);
-				
-				// close Button
-				
-		// HIER ENDE
-				
 		title.addTextChangedListener(new TextWatcher() {
-			
+
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			// solution very cumbersome, new implementation needed, but now for testing purposes -> TODO
 			@Override
 			public void afterTextChanged(Editable s) {
@@ -212,10 +151,10 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 				if (s.toString().equals("Wohnzimmer (yin)")) {
 					for (Room room : myHouse.getRooms()) {
 						if(room.getName().contains("Wohnzimmer")) {
-							
+
 							// remove all existing buttons before adding new ones
 							((GridLayout) findViewById(R.id.profilesGrid)).removeAllViews();
-							
+
 							// iterate over all profiles of a room and add a button for each profile
 							for(Profile profile : room.getProfiles()) {
 								Button profileButton = new Button(ScanActivity.this);
@@ -232,7 +171,7 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 						if(room.getName().contains("Schlafzimmer")) {
 							// remove all existing buttons before adding new ones
 							((GridLayout) findViewById(R.id.profilesGrid)).removeAllViews();
-							
+
 							// iterate over all profiles of a room and add a button for each profile
 							for(Profile profile : room.getProfiles()) {
 								Button profileButton = new Button(ScanActivity.this);
@@ -245,35 +184,48 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 						}
 					}
 				}
+
+				LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(200, 200);
+				rl.setMargins(5, 5, 5, 5);
+				Button closeButton = new Button(ScanActivity.this);
+				closeButton.setLayoutParams(rl);
+				closeButton.setText("Off");
+				closeButton.setTextSize(10.f);
+				closeButton.setTextColor(Color.WHITE);
+
+				closeButton.setBackground(getResources().getDrawable(R.drawable.roundedbutton));
+				closeButton.setOnClickListener(closeButtonClickListener);
+				closeButton.requestLayout();
+				((GridLayout) findViewById(R.id.profilesGrid)).addView(closeButton);
 			}
 		});
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_beacon_activity_actions, menu);
         return super.onCreateOptionsMenu(menu);
     }
-    
+
     @Override
     public void onBeaconServiceConnect() {}
-    
+
     /**
-     * 
+     *
      * @param view
      */
 	public void onScanButtonClicked(View view) {
 		toggleScanState();
 	}
-	
-	// onClickListener for every profile button 
-	OnClickListener profileButtonClickListener = new OnClickListener() {		
+
+	// onClickListener for every profile button
+	OnClickListener profileButtonClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			String profileName = ((Button) v).getText().toString();
-			
+
 			currentProfile = myHouse.getProfileByName(profileName);
 			int lamp = currentProfile.getActiveLamps().iterator().next().getActive();
 			Log.v("BT", "Lampe: " + lamp);
@@ -285,9 +237,9 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 			}
 		}
 	};
-	
-	// onClickListener for every profile button 
-		OnClickListener closeButtonClickListener = new OnClickListener() {		
+
+	// onClickListener for every profile button
+		OnClickListener closeButtonClickListener = new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -295,7 +247,7 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 				House.getInstance().allLampsOff();
 			}
 		};
-	
+
  	// Handle the user selecting "Settings" from the action bar.
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -309,12 +261,12 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 	    		// launch options when actionbar button is clicked
 	    		Intent options = new Intent(this, MainActivity.class);
 	            startActivity(options);
-	            return true;	    			    		
+	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	     }
 	 }
-	
+
 	/**
 	 * Start and stop scanning, and toggle button label appropriately.
 	 */
@@ -332,39 +284,39 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 	 * start looking for beacons.
 	 */
 	private void startScanning(Button scanButton) {
-		
+
 		// Set UI elements to the correct state.
 		scanButton.setText(MODE_SCANNING);
-		
+
 		// Reset event counter
 		eventNum = 1;
 		// Get current values for logging preferences
-		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);		
+		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 	    HashMap <String, Object> prefs = new HashMap<String, Object>();
 	    prefs.putAll(sharedPrefs.getAll());
-	    
+
 	    index = (Boolean)prefs.get(PREFERENCE_INDEX);
 	    uuid = (Boolean)prefs.get(PREFERENCE_UUID);
 		majorMinor = (Boolean)prefs.get(PREFERENCE_MAJORMINOR);
-		rssi = (Boolean)prefs.get(PREFERENCE_RSSI); 
+		rssi = (Boolean)prefs.get(PREFERENCE_RSSI);
 		proximity = (Boolean)prefs.get(PREFERENCE_PROXIMITY);
 		power = (Boolean)prefs.get(PREFERENCE_POWER);
 		timestamp = (Boolean)prefs.get(PREFERENCE_TIMESTAMP);
 		scanInterval = (String)prefs.get(PREFERENCE_SCANINTERVAL);
-		
+
 		// Get current background scan interval (if specified)
 		if (prefs.get(PREFERENCE_SCANINTERVAL) != null) {
 			beaconManager.setBackgroundBetweenScanPeriod(Long.parseLong(scanInterval));
 		}
-		
-		
-		
+
+
+
 		// Initialize scan log
 		logString = new StringBuffer();
-		
+
 		//Start scanning again.
         beaconManager.setRangeNotifier(new RangeNotifier() {
-        	@Override 
+        	@Override
         	public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
         		int min_rssi = -100;
         		Beacon minBeacon = null;
@@ -391,16 +343,16 @@ public class ScanActivity extends Activity implements BeaconConsumer {
             			logToTextView("No room nearby.");
             			logToText("No room nearby");
             		}
-        		} 
+        		}
         	}
         });
-        
+
 
         try {
             beaconManager.startRangingBeaconsInRegion(region);
-        } catch (RemoteException e) {   
+        } catch (RemoteException e) {
         	// TODO - OK, what now then?
-        }	
+        }
 
 	}
 
@@ -422,7 +374,7 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 	private Button getScanButton() {
 		return (Button)findViewById(R.id.scanButton);
 	}
-	
+
     /**
      * @param iBeacon
      * not used right now, maybe later
@@ -430,65 +382,65 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 	private void logBeaconData(Beacon beacon) {
 
 		StringBuffer scan = new StringBuffer();
-		
+
 		if (index.booleanValue()) {
 			scan.append(eventNum++ + "");
-		}				
-		
+		}
+
 		if (uuid.booleanValue()) {
 			scan.append(" UUID: " + beacon.getId1());
-		}		
-		
+		}
+
 		if (majorMinor.booleanValue()) {
 			scan.append(" Maj. Mnr.: " + beacon.getId2() + "-" + beacon.getId3());
 		}
-		
+
 		if (rssi.booleanValue()) {
 			scan.append(" RSSI: " + beacon.getRssi());
 		}
-				
+
 		if (proximity.booleanValue()) {
 			scan.append(" Proximity: " + BeaconHelper.getProximityString(beacon.getDistance()));
 		}
-		
+
 		if (power.booleanValue()) {
 			scan.append(" Power: "+ beacon.getTxPower());
 		}
-		
+
 		if (timestamp.booleanValue()) {
 			scan.append(" Timestamp: " + BeaconHelper.getCurrentTimeStamp());
 		}
-	    
+
 		//logToDisplay(scan.toString());
 		scan.append("\n");
 		logString.append(scan.toString());
-		
+
 	}
-    
+
 
 	/**
 	 * line logging methods to change TextView contents
 	 * */
-	
+
     private void logToText(final String line) {
     	runOnUiThread(new Runnable() {
-    	    public void run() {  
-    	    	TextView title = (TextView) ScanActivity.this.findViewById(R.id.textView1);
+    	    public void run() {
+    	    	TextView title = (TextView) ScanActivity.this.findViewById(R.id.hexValue);
     	    	title.setText(line);
     	    }
     	});
     }
-	
+
     private void logToTextView(final String line) {
     	runOnUiThread(new Runnable() {
-    	    public void run() {  
+    	    public void run() {
     	    	TextView title = (TextView) ScanActivity.this.findViewById(R.id.roomTitle);
     	    	title.setText(line);
     	    	setTitle(line);
     	    }
     	});
     }
-    
+
     /**
      * verify if bluetooth is available and/or enabled, because bluetooth is required to run the app
      * */
@@ -497,22 +449,22 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 		try {
 			if (!BeaconManager.getInstanceForApplication(this).checkAvailability()) {
 				final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setTitle("Bluetooth not enabled");			
+				builder.setTitle("Bluetooth not enabled");
 				builder.setMessage("Please enable bluetooth in settings and restart this application.");
 				builder.setPositiveButton(android.R.string.ok, null);
 				builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
 					@Override
 					public void onDismiss(DialogInterface dialog) {
 						finish();
-			            System.exit(0);					
-					}					
+			            System.exit(0);
+					}
 				});
 				builder.show();
-			}			
+			}
 		}
 		catch (RuntimeException e) {
 			final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle("Bluetooth LE not available");			
+			builder.setTitle("Bluetooth LE not available");
 			builder.setMessage("Sorry, this device does not support Bluetooth LE.");
 			builder.setPositiveButton(android.R.string.ok, null);
 			builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -520,14 +472,14 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 				@Override
 				public void onDismiss(DialogInterface dialog) {
 					finish();
-		            System.exit(0);					
+		            System.exit(0);
 				}
-				
+
 			});
 			builder.show();
-			
+
 		}
-		
-	}	  
-    
+
+	}
+
 }

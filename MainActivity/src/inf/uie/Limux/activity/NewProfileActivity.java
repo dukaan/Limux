@@ -193,6 +193,12 @@ public class NewProfileActivity extends Activity {
 		finish();
 	}
 	
+	// back button behavior overwritten for new profile activity
+	public void onBackPressed() {
+		myHouse.removeProfile(currentProfile);
+		finish();
+	};
+	
 	OnClickListener lampClickListener = new OnClickListener() {
 		
 		@Override
