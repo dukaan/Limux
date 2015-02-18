@@ -91,9 +91,27 @@ public class LampColor {
     
     public String getColorCodeAsString() {
     	String hexCode = "";
+    	String tempRed = "";
+    	String tempGreen = "";
+    	String tempBlue = "";
     	
-    	hexCode = "" + red + green + blue;
-    	
+    	if (red < 100) {
+    		tempRed = "0"+red;
+    	} else {
+    		tempRed = ""+red;
+    	}
+    	if (green < 100) {
+    		tempGreen = "0"+green;
+    	} else {
+    		tempGreen = ""+green;
+    	}
+    	if (blue < 100) {
+    		tempBlue = "0"+blue;
+    	} else {
+    		tempBlue = ""+blue;
+    	}
+    	hexCode = tempRed + tempGreen + tempBlue;
+    	// hexCode = "255255255";
     	return hexCode;
     }
     

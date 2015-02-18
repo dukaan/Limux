@@ -11,6 +11,7 @@ import java.io.IOException;
 public abstract class Lamp {
     // ---------- STATIC MEMBERS -----------
     private static int instanceCounter;
+    
 
     // ---------- MEMBERS ----------
     /**
@@ -23,12 +24,16 @@ public abstract class Lamp {
      */
     protected String name;
     
+    protected int isActive;
+    
     protected Room room;
+    private Bluetooth bluetooth;
 
     // ---------- CONSTRUCTORS ----------
     public Lamp() {
         this.id = instanceCounter++;
         this.name = "";
+        this.isActive = 0;
     }
 
     public Lamp(String name, Room room) {
@@ -36,27 +41,35 @@ public abstract class Lamp {
         this.name = name;
         this.room = room;
         room.addLamp(this);
+        
     }
-
+    
+    
     // --------- METHODS ----------
     public void on() {
-        String cmd = id + 1 + "#";
-        // TODO uncomment when Bluetooth class is ready
-        /*try {
-            Bluetooth.getInstance().sendData(cmd);
+        String cmd = id + "1" + "#";
+
+
+        Log.v("BT", "String:" + cmd);
+        try {
+        	Bluetooth.getInstance().sendData(cmd);
         } catch (IOException e) {
             Log.e("BT", "IOException: cannot turn light on");
-        }*/
+        }
+        
+        this.setActive(1);
     }
 
     public void off() {
-        String cmd = id + 0 + "#";
+        String cmd = id + "0" + "#";
         // TODO uncomment when Bluetooth class is ready
-        /*try {
+        try {
             Bluetooth.getInstance().sendData(cmd);
         } catch (IOException e) {
             Log.e("BT", "IOException: cannot turn light off");
-        }*/
+        }
+        
+        this.setActive(0);
     }
     
     // --------- SETTER&GETTER ----------
@@ -66,5 +79,13 @@ public abstract class Lamp {
     
     public Room getRoom() {
     	return room;
+    }
+    
+    public int getActive() {
+    	return isActive;
+    }
+    
+    public void setActive(int value) {
+        this.isActive = value;
     }
 }

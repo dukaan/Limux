@@ -58,8 +58,9 @@ public class ShowProfileFragment extends Fragment {
 		
 		// add a button for each existing profile in the house
 		for(inf.uie.Limux.model.Profile profile : myHouse.getAllProfiles()) {
+			LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(200, 200);
+			rl.setMargins(5, 5, 5, 5);
 			Button profileButton = new Button(getActivity());
-			LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(250, 250);
 			profileButton.setLayoutParams(rl);
 			profileButton.setText(profile.getName());
 			profileButton.setTextSize(10.f);
@@ -89,9 +90,9 @@ public class ShowProfileFragment extends Fragment {
 			} else {
 				((GradientDrawable) profileButton.getBackground()).setColor(colorsInt[0]);
 			}
-			
+			profileButton.requestLayout();
 			profileButton.setOnClickListener(profileButtonClickListener);
-			((GridLayout) getView().findViewById(R.id.buttonGrid)).addView(profileButton);
+			((GridLayout) getView().findViewById(R.id.buttonGrid)).addView(profileButton, rl);
 		}
 	};
 	

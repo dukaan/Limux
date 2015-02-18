@@ -9,6 +9,7 @@ import java.util.Set;
 
 import android.R.integer;
 import android.graphics.Color;
+import android.util.Log;
 
 /**
  * @author Marcel
@@ -73,12 +74,14 @@ public class Profile {
         */
         for (Lamp lamp : activeLampsSet) {
             lamp.on();
+            lamp.setActive(1);
         }
     }
 
     public void disable() {
         for (Lamp lamp : activeLampsSet) {
             lamp.off();
+            lamp.setActive(0);
         }
     }
 

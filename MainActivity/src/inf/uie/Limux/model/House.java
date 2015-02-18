@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import android.util.Log;
+
 /**
  * This is a singleton
  *
@@ -112,6 +114,7 @@ public class House {
      */
     public void allLampsOff() {
         for (Room room : roomList) {
+        	Log.v("BT", "House: " + "off");
             room.allLampsOff();
         }
     }

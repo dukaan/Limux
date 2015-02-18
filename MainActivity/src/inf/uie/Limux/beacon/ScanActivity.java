@@ -1,14 +1,22 @@
 package inf.uie.Limux.beacon;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 
 import inf.uie.Limux.R;
+import inf.uie.Limux.activity.EditProfileActivity;
 import inf.uie.Limux.activity.MainActivity;
 import inf.uie.Limux.model.House;
+import inf.uie.Limux.model.Lamp;
+import inf.uie.Limux.model.LampColor;
 import inf.uie.Limux.model.Profile;
 import inf.uie.Limux.model.Room;
+import inf.uie.Limux.bluetooth.Bluetooth;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -23,15 +31,20 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.GradientDrawable.Orientation;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
@@ -80,11 +93,14 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 	
 	// house variable (singleton)
 	private House myHouse;
+	private Bluetooth bluetooth;
+	private Profile currentProfile = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 		setContentView(R.layout.beacon_activity_scan);
+	
 		
 		verifyBluetooth();
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -103,9 +119,77 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 		getScanButton().setText(MODE_STOPPED);
 		
 		myHouse = House.getInstance();
+		try {
+			bluetooth = Bluetooth.getInstance();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		// adding onChangeListener for TextView to show profiles of the nearest room
 		TextView title = (TextView) ScanActivity.this.findViewById(R.id.roomTitle);
+		
+		
+		// HIER TEST
+		// remove all existing buttons before adding new ones
+		((GridLayout) findViewById(R.id.profilesGrid)).removeAllViews();
+		
+		// add a button for each existing profile in the house
+				for(inf.uie.Limux.model.Profile profile : myHouse.getAllProfiles()) {
+					LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(200, 200);
+					rl.setMargins(15, 15, 15, 15);
+					Button profileButton = new Button(ScanActivity.this);
+					profileButton.setLayoutParams(rl);
+					profileButton.setText(profile.getName());
+					profileButton.setTextSize(10.f);
+					profileButton.setTextColor(Color.WHITE);
+					
+					profileButton.setBackground(getResources().getDrawable(R.drawable.roundedbutton));
+					//GradientDrawable gd = (GradientDrawable) profileButton.getBackground();
+					
+					// create gradient background for profile buttons
+					ArrayList<Integer> colorList = new ArrayList<Integer>();
+					for(LampColor color : profile.getUsedColors()) {
+						colorList.add(Color.argb(255, color.getRed(), color.getGreen(), color.getBlue()));
+					}
+					
+					int[] colorsInt = new int[colorList.size()];
+					
+					for(int i = 0; i<colorList.size(); i++) {
+							colorsInt[i] = colorList.get(i);
+							//Log.i("Colors: ", profile.getName() + ": " + colorsInt[i]);
+					}
+
+					if(colorsInt.length > 1) {
+						GradientDrawable gd = new GradientDrawable(Orientation.LEFT_RIGHT, colorsInt);
+						gd.setStroke(6, Color.WHITE);
+						gd.setShape(GradientDrawable.OVAL);
+						profileButton.setBackground(gd);
+					} else {
+						((GradientDrawable) profileButton.getBackground()).setColor(colorsInt[0]);
+					}
+					profileButton.setOnClickListener(profileButtonClickListener);
+					profileButton.requestLayout();
+					((GridLayout) findViewById(R.id.profilesGrid)).addView(profileButton);
+				}
+				
+				LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(200, 200);
+				rl.setMargins(5, 5, 5, 5);
+				Button closeButton = new Button(ScanActivity.this);
+				closeButton.setLayoutParams(rl);
+				closeButton.setText("Off");
+				closeButton.setTextSize(10.f);
+				closeButton.setTextColor(Color.WHITE);
+				
+				closeButton.setBackground(getResources().getDrawable(R.drawable.roundedbutton));
+				closeButton.setOnClickListener(closeButtonClickListener);
+				closeButton.requestLayout();
+				((GridLayout) findViewById(R.id.profilesGrid)).addView(closeButton);
+				
+				// close Button
+				
+		// HIER ENDE
+				
 		title.addTextChangedListener(new TextWatcher() {
 			
 			@Override
@@ -138,6 +222,7 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 								RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams(350, 250);
 								profileButton.setLayoutParams(rl);
 								profileButton.setText(profile.getName());
+								profileButton.setOnClickListener(profileButtonClickListener);
 								((GridLayout) findViewById(R.id.profilesGrid)).addView(profileButton);
 							}
 						}
@@ -154,6 +239,7 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 								RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams(350, 250);
 								profileButton.setLayoutParams(rl);
 								profileButton.setText(profile.getName());
+								profileButton.setOnClickListener(profileButtonClickListener);
 								((GridLayout) findViewById(R.id.profilesGrid)).addView(profileButton);
 							}
 						}
@@ -180,6 +266,35 @@ public class ScanActivity extends Activity implements BeaconConsumer {
 	public void onScanButtonClicked(View view) {
 		toggleScanState();
 	}
+	
+	// onClickListener for every profile button 
+	OnClickListener profileButtonClickListener = new OnClickListener() {		
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			String profileName = ((Button) v).getText().toString();
+			
+			currentProfile = myHouse.getProfileByName(profileName);
+			int lamp = currentProfile.getActiveLamps().iterator().next().getActive();
+			Log.v("BT", "Lampe: " + lamp);
+			Log.v("BT", "NET: " + currentProfile.getActiveLamps().iterator().next());
+			if (lamp == 0) {
+				currentProfile.enable();
+			} else {
+				currentProfile.disable();
+			}
+		}
+	};
+	
+	// onClickListener for every profile button 
+		OnClickListener closeButtonClickListener = new OnClickListener() {		
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Log.v("BT", "Scan: " + "off");
+				House.getInstance().allLampsOff();
+			}
+		};
 	
  	// Handle the user selecting "Settings" from the action bar.
 	@Override

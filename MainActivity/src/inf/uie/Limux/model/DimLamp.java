@@ -1,5 +1,10 @@
 package inf.uie.Limux.model;
 
+import java.io.IOException;
+
+import android.util.Log;
+import inf.uie.Limux.bluetooth.Bluetooth;
+
 /**
  * @author Marcel
  */
@@ -10,6 +15,8 @@ public class DimLamp extends Lamp {
      * Brightness of the light
      */
     private int brightness;
+    
+    private Bluetooth bluetooth;
 
     // ---------- CONSTRUCTORS ----------
     public DimLamp() {
@@ -25,13 +32,19 @@ public class DimLamp extends Lamp {
     // ---------- OVERRIDES ----------
     @Override
     public void on() {
-        String cmd = id + brightness + "#";
-        // TODO uncomment when Bluetooth class is ready
-        /*try {
+    	String tempBrightness = "";
+    	String cmd ="";
+    	if (brightness < 100) {
+    		cmd = id + "10" + brightness + "#";
+    	} else {
+    		cmd = id + "1" + brightness + "#";
+    	}
+
+        try {
             Bluetooth.getInstance().sendData(cmd);
         } catch (IOException e) {
             Log.e("BT", "IOException: cannot turn light on");
-        }*/
+        }
     }
 
     // ---------- GETTER & SETTER ----------

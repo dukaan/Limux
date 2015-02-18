@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import inf.uie.Limux.R;
+import inf.uie.Limux.model.House;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,96 +21,31 @@ import java.io.OutputStream;
 import java.util.Set;
 import java.util.UUID;
 
-public class Bluetooth extends Activity {
+public class Bluetooth {
+	
+	private static Bluetooth instance;
 
-    TextView label;
-    EditText editText;
-    BluetoothAdapter mBluetoothAdapter;
-    BluetoothSocket mmSocket;
-    BluetoothDevice mmDevice;
-    OutputStream mmOutputStream;
-    InputStream mmInputStream;
+    static BluetoothAdapter mBluetoothAdapter;
+    static BluetoothSocket mmSocket;
+    static BluetoothDevice mmDevice;
+    static OutputStream mmOutputStream;
+    static InputStream mmInputStream;
     Thread workerThread;
     byte[] readBuffer;
     int readBufferPosition;
     int counter;
     volatile boolean stopWorker;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bluetooth);
-
-        Button openButton = (Button) findViewById(R.id.open);
-        Button closeButton = (Button) findViewById(R.id.close);
-        Button sendButton = (Button) findViewById(R.id.send);
-        Button offButton = (Button) findViewById(R.id.off);
-        editText = (EditText) findViewById(R.id.editText);
-
-        label = (TextView) findViewById(R.id.label);
-
-        // open Button
-        openButton.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    findBluetooth();
-                    openBluetooth();
-                } catch (IOException ex ) {
-
-                }
-            }
-        });
-
-        // close Button
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    closeBluetooth();
-                } catch (IOException ex ) {
-
-                }
-            }
-        });
-
-        // send Button
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String message = editText.getText().toString();
-                try {
-                    sendData(message);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        // alle Lampen aus Button
-        offButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    sendData("0#");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-
-    void findBluetooth() {
+    
+    private Bluetooth() throws IOException {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         if (mBluetoothAdapter == null) {
-            label.setText("No Bluetooth adapter available");
+            // label.setText("No Bluetooth adapter available");
         }
 
         if (!mBluetoothAdapter.isEnabled()) {
             Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBluetooth, 0);
+            // startActivityForResult(enableBluetooth, 0);
         }
 
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
@@ -124,25 +60,15 @@ public class Bluetooth extends Activity {
                 }
             }
         }
-
-
-
-        label.setText("Bluetooth Device Found");
-    }
-
-
-    void openBluetooth() throws IOException {
+        
         UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
         mmSocket = mmDevice.createRfcommSocketToServiceRecord(uuid);
         mmSocket.connect();
         mmOutputStream = mmSocket.getOutputStream();
         mmInputStream = mmSocket.getInputStream();
-
-        // label.setText(mmOutputStream.toString());
-
-        // beginListenForData();
     }
+
 
     void beginListenForData() {
         final Handler handler = new Handler();
@@ -173,11 +99,6 @@ public class Bluetooth extends Activity {
                                             encodedBytes, "US-ASCII");
                                     readBufferPosition = 0;
 
-                                    handler.post(new Runnable() {
-                                        public void run() {
-                                            label.setText("HIER"+data);
-                                        }
-                                    });
                                 } else {
                                     readBuffer[readBufferPosition++] = b;
                                 }
@@ -194,12 +115,11 @@ public class Bluetooth extends Activity {
     }
 
 
-    void sendData(String message) throws IOException {
-        Log.v("ArduinoBT", "message is" + message);
+    public void sendData(String message) throws IOException {
+        Log.v("ArduinoBT", "Nachricht ist " + message);
             byte[] msgBuffer = message.getBytes();
             Log.v("ArduinoBT", "message is" + msgBuffer);
             mmOutputStream.write(msgBuffer);
-        label.setText("Data send" + message);
     }
 
     void onButton() throws IOException {
@@ -215,7 +135,21 @@ public class Bluetooth extends Activity {
         sendData("0#");
         mmOutputStream.close();
         mmInputStream.close();
-        mmSocket.close();
-        label.setText("Bluetooth closed");
+        mmSocket.close();    
+     }
+    
+    // ---------- STATIC METHODS ----------
+
+    /**
+     * Get the instance of the singleton
+     *
+     * @return instance
+     * @throws IOException 
+     */
+    public static Bluetooth getInstance() throws IOException {
+        if (Bluetooth.instance == null) {
+        	Bluetooth.instance = new Bluetooth();
+        }
+        return Bluetooth.instance;
     }
 }
