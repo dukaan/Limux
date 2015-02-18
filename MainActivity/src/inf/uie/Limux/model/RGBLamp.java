@@ -21,7 +21,19 @@ public class RGBLamp extends Lamp {
         this.color = LampColor.WHITE;
     }
 
-    // --------- GETTER & SETTER ----------
+    // ---------- OVERRIDES ----------
+    @Override
+    public void on() {
+        String cmd = id + color.getColorCodeAsString() + "#";
+        // TODO uncomment when Bluetooth class is ready
+        /*try {
+            Bluetooth.getInstance().sendData(cmd);
+        } catch (IOException e) {
+            Log.e("BT", "IOException: cannot turn light on");
+        }*/
+    }
+
+    // ---------- GETTER & SETTER ----------
     public void setColor(LampColor color) {
         this.color = color;
     }

@@ -1,0 +1,192 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="inf.uie.Limux.activity.EditProfileActivity" >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_below="@+id/imageView1"
+        android:layout_marginTop="65dp"
+        android:gravity="center"
+        android:text="E D I T   P R O F I L E"
+        android:textColor="#ffffff"
+        android:textSize="20dp"
+        android:textStyle="normal|bold" />
+
+    <EditText
+        android:id="@+id/profileName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="NAME OF PROFILE"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textColorHint="#44ffffff" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="7dp"
+        android:gravity="center"
+        android:minLines="2"
+        android:text="You can choose a color for every lamp in your house. Scroll down and click the done button to confirm your changes."
+        android:textAlignment="center"
+        android:textColor="#5597bc" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/edit_wheel" />
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profileName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:scrollbarAlwaysDrawVerticalTrack="false"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <GridLayout
+                android:id="@+id/gridLayout1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:columnCount="1" >
+
+                <GridLayout
+                    android:id="@+id/livingRoomGrid"
+                    android:layout_column="0"
+                    android:layout_gravity="center"
+                    android:layout_row="1"
+                    android:columnCount="3" >
+                </GridLayout>
+
+                <GridLayout
+                    android:id="@+id/bedRoomGrid"
+                    android:layout_column="0"
+                    android:layout_gravity="center"
+                    android:layout_row="3"
+                    android:columnCount="3" >
+                </GridLayout>
+
+                <RelativeLayout
+                    android:layout_width="285dp"
+                    android:layout_column="0"
+                    android:layout_gravity="left|top"
+                    android:layout_marginBottom="15dp"
+                    android:layout_row="0" >
+
+                    <TextView
+                        android:id="@+id/firstRoom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Zimmer 1"
+                        android:textColor="#aaffffff" />
+
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:layout_alignBottom="@+id/firstRoom"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/firstRoom"
+                        android:background="#aaffffff" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="285dp"
+                    android:layout_height="17dp"
+                    android:layout_column="0"
+                    android:layout_gravity="left|fill_vertical"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_row="2" >
+
+                    <TextView
+                        android:id="@+id/secondRoom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Zimmer 2"
+                        android:textColor="#aaffffff" />
+
+                    <View
+                        android:id="@+id/View01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentTop="false"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/secondRoom"
+                        android:background="#aaffffff" />
+                </RelativeLayout>
+            </GridLayout>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:columnCount="1" >
+
+                <ImageButton
+                    android:id="@+id/imageButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:layout_marginLeft="150dp"
+                    android:layout_row="0"
+                    android:background="#00000000"
+                    android:onClick="deleteButtonClick"
+                    android:src="@drawable/delete_button" />
+
+                <ImageButton
+                    android:id="@+id/imageButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_gravity="center_horizontal|top"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_row="0"
+                    android:background="#00000000"
+                    android:onClick="doneButtonClick"
+                    android:src="@drawable/done_button" />
+
+            </GridLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

@@ -1,5 +1,10 @@
 package inf.uie.Limux.model;
 
+import android.util.Log;
+import inf.uie.Limux.bluetooth.Bluetooth;
+
+import java.io.IOException;
+
 /**
  * @author Marcel
  */
@@ -11,14 +16,14 @@ public abstract class Lamp {
     /**
      * ID of the Lamp
      */
-    private int id;
+    protected int id;
 
     /**
      * Name of the lamp
      */
-    private String name;
+    protected String name;
     
-    private Room room;
+    protected Room room;
 
     // ---------- CONSTRUCTORS ----------
     public Lamp() {
@@ -35,11 +40,23 @@ public abstract class Lamp {
 
     // --------- METHODS ----------
     public void on() {
-        // TODO
+        String cmd = id + 1 + "#";
+        // TODO uncomment when Bluetooth class is ready
+        /*try {
+            Bluetooth.getInstance().sendData(cmd);
+        } catch (IOException e) {
+            Log.e("BT", "IOException: cannot turn light on");
+        }*/
     }
 
     public void off() {
-        // TODO
+        String cmd = id + 0 + "#";
+        // TODO uncomment when Bluetooth class is ready
+        /*try {
+            Bluetooth.getInstance().sendData(cmd);
+        } catch (IOException e) {
+            Log.e("BT", "IOException: cannot turn light off");
+        }*/
     }
     
     // --------- SETTER&GETTER ----------

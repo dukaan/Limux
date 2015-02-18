@@ -22,6 +22,18 @@ public class DimLamp extends Lamp {
         this.brightness = 0;
     }
 
+    // ---------- OVERRIDES ----------
+    @Override
+    public void on() {
+        String cmd = id + brightness + "#";
+        // TODO uncomment when Bluetooth class is ready
+        /*try {
+            Bluetooth.getInstance().sendData(cmd);
+        } catch (IOException e) {
+            Log.e("BT", "IOException: cannot turn light on");
+        }*/
+    }
+
     // ---------- GETTER & SETTER ----------
 
     /**

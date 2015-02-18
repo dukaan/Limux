@@ -22,5 +22,9 @@
     <string name="action_deletefiles">Delete Files</string>
     <string name="action_transferfiles">Transfer Files</string>
     <string name="title_activity_main_screen">MainScreenActivity</string>
+    <string name="title_activity_new_profile">NewProfileActivity</string>
+    <string name="title_activity_profile_colors">ProfileColorsActivity</string>
+    <string name="title_activity_edit_profile">EditProfileActivity</string>
+    <string name="title_activity_color_picker">ColorPickerActivity</string>
 
 </resources>
