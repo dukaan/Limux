@@ -358,7 +358,7 @@ public class ScanActivity extends Activity implements BeaconConsumer {
     private void logToText(final String line) {
     	runOnUiThread(new Runnable() {
     	    public void run() {  
-    	    	TextView title = (TextView) ScanActivity.this.findViewById(R.id.textView1);
+    	    	TextView title = (TextView) ScanActivity.this.findViewById(R.id.hexValue);
     	    	title.setText(line);
     	    }
     	});
