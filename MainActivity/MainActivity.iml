@@ -33,7 +33,8 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="android-beacon-library" exported="" />
+    <orderEntry type="module" module-name="android-beacon-library" exported="" scope="PROVIDED" />
+    <orderEntry type="library" name="classes" level="project" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
