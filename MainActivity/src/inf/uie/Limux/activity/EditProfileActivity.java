@@ -44,6 +44,8 @@ public class EditProfileActivity extends Activity {
 		String profileName = lastIntent.getStringExtra("profileName");
 		EditText profileNameEdit = (EditText) findViewById(R.id.profileName);
 		profileNameEdit.setText(profileName);
+		// change edit text underline color
+		profileNameEdit.getBackground().setColorFilter(Color.argb(255, 89, 145, 180), Mode.SRC_ATOP);
 		
 		currentProfile = myHouse.getProfileByName(profileName);
 		setTitle("Edit Profile");

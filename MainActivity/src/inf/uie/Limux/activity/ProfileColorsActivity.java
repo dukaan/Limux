@@ -40,7 +40,7 @@ public class ProfileColorsActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_profile_colors);
-		setTitle("New Profile");
+		setTitle("Profile Colors");
 		
 		// set title with name of clicked lamp
 		Intent lastIntent = getIntent();

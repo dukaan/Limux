@@ -13,6 +13,7 @@ import inf.uie.Limux.model.Room;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff.Mode;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,6 +37,10 @@ public class NewProfileActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_profile);
 		setTitle("New Profile");
+		
+		EditText profileNameEdit = (EditText) findViewById(R.id.profileName);
+		// change edit text underline color
+		profileNameEdit.getBackground().setColorFilter(Color.argb(255, 89, 145, 180), Mode.SRC_ATOP);
 		
 		myHouse = House.getInstance();
 		currentProfile = new Profile("");

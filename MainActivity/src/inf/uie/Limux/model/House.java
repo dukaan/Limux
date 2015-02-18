@@ -45,9 +45,9 @@ public class House {
         this.roomList = new ArrayList<Room>();
         
         // initialize sample data for testing
-        LampColor red = new LampColor("Rot", 255, 0, 0);
-        LampColor green = new LampColor("Gruen", 0, 255, 0);
-        LampColor blue = new LampColor("Blau", 0, 0, 255);
+        LampColor red = new LampColor("Rot", 178, 75, 75);
+        LampColor green = new LampColor("Gruen", 36, 146, 48);
+        LampColor blue = new LampColor("Blau", 28, 77, 180);
         
         Room livingRoom = new Room("Wohnzimmer");
         Room bedRoom = new Room("Schlafzimmer");
