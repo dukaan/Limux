@@ -10,7 +10,7 @@
     tools:context="inf.uie.Limux.activity.ProfileColorsActivity" >
 
     <ImageButton
-        android:id="@+id/imageButton1"
+        android:id="@+id/radarScan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -24,7 +24,7 @@
         android:id="@+id/colorGrid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/hexValue"
+        android:layout_below="@+id/infoText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:clipChildren="true"
@@ -60,7 +60,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/hexValue"
+        android:id="@+id/infoText"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"

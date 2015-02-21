@@ -11,11 +11,13 @@ import inf.uie.Limux.model.Profile;
 import inf.uie.Limux.model.RGBLamp;
 import android.R.bool;
 import android.app.ActionBar.LayoutParams;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
@@ -36,11 +38,17 @@ public class ProfileColorsActivity extends Activity {
 	private Lamp currentLamp = null;
 	private LampColor chosenColor = null;
 
+	private ActionBar actionBar;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_profile_colors);
 		setTitle("Profile Colors");
+		
+		actionBar = getActionBar();
+		actionBar.setBackgroundDrawable(new ColorDrawable(0xFF275B7A));
+        actionBar.setStackedBackgroundDrawable(new ColorDrawable(0xFF275B7A));
 		
 		// set title with name of clicked lamp
 		Intent lastIntent = getIntent();
@@ -54,14 +62,15 @@ public class ProfileColorsActivity extends Activity {
 		currentProfile = myHouse.getProfileByName(profileName);
 		
 		if(currentProfile != null) {
-			if (!currentProfile.getUsedColors().isEmpty()) {
-				for (LampColor lampColor : currentProfile.getUsedColors()) {
+			if (true) {
+				for (LampColor lampColor : LampColor.colorPresets) {
 					Button colorButton = new Button(this);
 					LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(175, 175);
 					colorButton.setLayoutParams(rl);
 					colorButton.setText(lampColor.getName());
 					colorButton.setTextSize(10.f);
 					colorButton.setTextColor(Color.WHITE);
+					currentProfile.getUsedColors().add(lampColor);
 					
 					int color = Color.argb(255, lampColor.getRed(), lampColor.getGreen(), lampColor.getBlue());
 					colorButton.setBackground(getResources().getDrawable(R.drawable.roundedbutton));

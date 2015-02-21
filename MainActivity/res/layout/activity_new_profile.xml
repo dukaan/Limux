@@ -10,62 +10,11 @@
     android:textAlignment="center"
     tools:context="inf.uie.Limux.activity.NewProfileActivity" >
 
-    <EditText
-        android:id="@+id/profileName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/hexValue"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="NAME OF PROFILE"
-        android:textAlignment="center"
-        android:textColor="#ffffff"
-        android:textColorHint="#44ffffff" />
-
-    <TextView
-        android:id="@+id/hexValue"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:minLines="2"
-        android:text="Choose which lamps should glim in which color."
-        android:textAlignment="center"
-        android:textColor="#5597bc" />
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="65dp"
-        android:gravity="center"
-        android:text="C R E A T E    N E W   P R O F I L E"
-        android:textColor="#ffffff"
-        android:textSize="20dp"
-        android:textStyle="bold|normal" />
-
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:src="@drawable/new_profile" />
-
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/profileName"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
         android:scrollbars="none" >
 
         <LinearLayout
@@ -74,9 +23,54 @@
             android:layout_marginTop="0dp"
             android:orientation="vertical" >
 
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/new_profile" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="C R E A T E    N E W   P R O F I L E"
+                android:textColor="#ffffff"
+                android:textSize="20dp"
+                android:textStyle="bold|normal" />
+
+            <TextView
+                android:id="@+id/infoText"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:minLines="2"
+                android:text="You can choose a color for every lamp in your house. Scroll down and click the done button to confirm your changes."
+                android:textAlignment="center"
+                android:textColor="#5597bc" />
+
+            <EditText
+                android:id="@+id/profileName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="NAME OF PROFILE"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textColorHint="#44ffffff" />
+
             <GridLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
                 android:columnCount="1" >
 
                 <GridLayout
@@ -170,7 +164,7 @@
                     android:src="@drawable/delete_button" />
 
                 <ImageButton
-                    android:id="@+id/imageButton1"
+                    android:id="@+id/radarScan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="1"
@@ -179,9 +173,7 @@
                     android:background="#00000000"
                     android:onClick="doneButtonClick"
                     android:src="@drawable/done_button" />
-
             </GridLayout>
-
         </LinearLayout>
     </ScrollView>
 

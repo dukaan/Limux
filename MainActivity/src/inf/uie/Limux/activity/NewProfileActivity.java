@@ -1,19 +1,24 @@
 package inf.uie.Limux.activity;
 
+import inf.uie.Limux.DimPickerActivity;
 import inf.uie.Limux.R;
 import inf.uie.Limux.R.id;
 import inf.uie.Limux.R.layout;
 import inf.uie.Limux.R.menu;
+import inf.uie.Limux.model.BinLamp;
+import inf.uie.Limux.model.DimLamp;
 import inf.uie.Limux.model.House;
 import inf.uie.Limux.model.Lamp;
 import inf.uie.Limux.model.LampColor;
 import inf.uie.Limux.model.Profile;
 import inf.uie.Limux.model.RGBLamp;
 import inf.uie.Limux.model.Room;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,12 +36,18 @@ public class NewProfileActivity extends Activity {
 	
 	private House myHouse;
 	private Profile currentProfile;
+	
+	private ActionBar actionBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_profile);
 		setTitle("New Profile");
+		
+		actionBar = getActionBar();
+		actionBar.setBackgroundDrawable(new ColorDrawable(0xFF275B7A));
+        actionBar.setStackedBackgroundDrawable(new ColorDrawable(0xFF275B7A));
 		
 		EditText profileNameEdit = (EditText) findViewById(R.id.profileName);
 		// change edit text underline color
@@ -110,13 +121,14 @@ public class NewProfileActivity extends Activity {
 					
 					// set backgroundcolor of button according to lamp color when lamp is active
 					if(checkIfActiveLamp(lamp)) {
-						if(lamp instanceof RGBLamp) {
+						if(lamp.getName() == "Lampe1") {
 							LampColor lampColor = currentProfile.getLampWithColorMap().get(lamp);
 							int color = Color.argb(255, lampColor.getRed(), lampColor.getGreen(), lampColor.getBlue());
 							lampButton.setBackgroundColor(color);
 							lampButton.setTextColor(Color.argb(255, 255, 255, 255));
 						} else {
 							lampButton.setBackgroundColor(Color.WHITE);
+							lampButton.setTextColor(Color.argb(255, 39, 72, 118));
 						}
 					}
 					
@@ -143,13 +155,14 @@ public class NewProfileActivity extends Activity {
 					
 					// set backgroundcolor of button according to lamp color when lamp is active
 					if(checkIfActiveLamp(lamp)) {
-						if(lamp instanceof RGBLamp) {
+						if(lamp.getName() == "Lampe1") {
 							LampColor lampColor = currentProfile.getLampWithColorMap().get(lamp);
 							int color = Color.argb(255, lampColor.getRed(), lampColor.getGreen(), lampColor.getBlue());
 							lampButton.setBackgroundColor(color);
 							lampButton.setTextColor(Color.argb(255, 255, 255, 255));
 						} else {
 							lampButton.setBackgroundColor(Color.WHITE);
+							lampButton.setTextColor(Color.argb(255, 39, 72, 118));
 						}
 					}
 					
@@ -204,15 +217,27 @@ public class NewProfileActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			Intent profileColorsActivity = new Intent(NewProfileActivity.this, ProfileColorsActivity.class);
-			profileColorsActivity.putExtra("lampName", ((Button) v).getText().toString());
-			profileColorsActivity.putExtra("profileName", currentProfile.getName());
 			
 			// add empty profile to room
+		
 			Lamp lamp = myHouse.getLampByName(((Button) v).getText().toString());
 			lamp.getRoom().addProfile(currentProfile);
 			
-			startActivity(profileColorsActivity);
+			if(lamp.getName() == "Lampe1") {
+				Intent profileColorsActivity = new Intent(NewProfileActivity.this, ProfileColorsActivity.class);
+				profileColorsActivity.putExtra("lampName", ((Button) v).getText().toString());
+				profileColorsActivity.putExtra("profileName", currentProfile.getName());
+				startActivity(profileColorsActivity);
+			} else {
+				Lamp clickedLamp = myHouse.getLampByName(((Button) v).getText().toString());
+				if(currentProfile.getActiveLamps().contains(clickedLamp)) {
+					currentProfile.removeColorOfLamp( (RGBLamp) clickedLamp); 
+					showRoomsWithLamps();
+				} else {
+					currentProfile.addColorForLamp( (RGBLamp) clickedLamp , new LampColor(255, 0, 0));
+					showRoomsWithLamps();
+				}
+			} 
 		}
 	};
 	

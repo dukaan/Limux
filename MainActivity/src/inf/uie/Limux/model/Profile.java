@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import android.R.integer;
+import android.app.UiAutomation.OnAccessibilityEventListener;
 import android.graphics.Color;
 import android.util.Log;
 
@@ -73,7 +74,7 @@ public class Profile {
             Vielleicht mit einer Map?
         */
         for (Lamp lamp : activeLampsSet) {
-            lamp.on();
+            lamp.on(lampWithColorMap.get(lamp)); 
             lamp.setActive(1);
         }
     }

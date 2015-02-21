@@ -31,13 +31,13 @@ public abstract class Lamp {
 
     // ---------- CONSTRUCTORS ----------
     public Lamp() {
-        this.id = instanceCounter++;
         this.name = "";
         this.isActive = 0;
     }
 
-    public Lamp(String name, Room room) {
+    public Lamp(String name, Room room, int id) {
         this();
+        this.id = id;
         this.name = name;
         this.room = room;
         room.addLamp(this);
@@ -47,7 +47,7 @@ public abstract class Lamp {
     
     // --------- METHODS ----------
     public void on() {
-        String cmd = id + "1" + "#";
+        String cmd = id + "#";
 
 
         Log.v("BT", "String:" + cmd);
@@ -59,6 +59,21 @@ public abstract class Lamp {
         
         this.setActive(1);
     }
+    
+    public void on(LampColor color) {
+        String cmd = id + "#";
+
+
+        Log.v("BT", "String:" + cmd);
+        try {
+        	Bluetooth.getInstance().sendData(cmd);
+        } catch (IOException e) {
+            Log.e("BT", "IOException: cannot turn light on");
+        }
+        
+        this.setActive(1);
+    }
+
 
     public void off() {
         String cmd = id + "0" + "#";

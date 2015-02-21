@@ -24,8 +24,8 @@ public class DimLamp extends Lamp {
         this.brightness = 0;
     }
 
-    public DimLamp(String name, Room room) {
-        super(name, room);
+    public DimLamp(String name, Room room, int id) {
+        super(name, room, id);
         this.brightness = 0;
     }
 
@@ -35,9 +35,9 @@ public class DimLamp extends Lamp {
     	String tempBrightness = "";
     	String cmd ="";
     	if (brightness < 100) {
-    		cmd = id + "10" + brightness + "#";
+    		cmd = id + "0" + brightness + "#";
     	} else {
-    		cmd = id + "1" + brightness + "#";
+    		cmd = id + brightness + "#";
     	}
 
         try {

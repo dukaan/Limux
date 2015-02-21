@@ -13,10 +13,12 @@ import inf.uie.Limux.model.Lamp;
 import inf.uie.Limux.model.LampColor;
 import inf.uie.Limux.model.Profile;
 import inf.uie.Limux.model.RGBLamp;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -34,12 +36,18 @@ public class ColorPickerActivity extends Activity {
 	private Profile currentProfile = null;
 	private Lamp currentLamp = null;
 	private LampColor chosenColor = null;
+	
+	private ActionBar actionBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_color_picker);
 		setTitle("Color Picker");
+		
+		actionBar = getActionBar();
+		actionBar.setBackgroundDrawable(new ColorDrawable(0xFF275B7A));
+        actionBar.setStackedBackgroundDrawable(new ColorDrawable(0xFF275B7A));
 		
 		Intent lastIntent = getIntent();
 		currentProfile = myHouse.getProfileByName(lastIntent.getStringExtra("currentProfile"));
@@ -99,7 +107,7 @@ public class ColorPickerActivity extends Activity {
     	    public void run() {  
     	    	//getWindow().getDecorView().setBackgroundColor(color);
     	    	//((TextView) findViewById(R.id.title)).setTextColor(color);
-    	    	TextView hexText = (TextView) findViewById(R.id.hexValue);
+    	    	TextView hexText = (TextView) findViewById(R.id.infoText);
     	    	hexText.setTextColor(color);
     	    	if(chosenColor != null)
     	    	hexText.setText("#" + Integer.toHexString(chosenColor.getRed()) + Integer.toHexString(chosenColor.getGreen()) + Integer.toHexString(chosenColor.getBlue()));

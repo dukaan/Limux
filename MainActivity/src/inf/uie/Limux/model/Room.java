@@ -36,8 +36,8 @@ public class Room {
     private HashSet<Profile> profileSet;
 
     // ---------- CONSTRUCTORS ----------
-    public Room(String name) {
-        this.id = instanceCounter++;
+    public Room(String name, int id) {
+        this.id = id;
         this.name = name;
         this.lampList = new ArrayList<Lamp>();
         this.profileSet = new HashSet<Profile>();
@@ -87,6 +87,10 @@ public class Room {
     }
     
     // ---------- GETTER&SETTER ---------- 
+    
+    public int getId() {
+        return id;
+    }
     
     public String getName() {
     	return name;

@@ -23,15 +23,26 @@ public class RGBLamp extends Lamp {
         this.color = LampColor.WHITE;
     }
 
-    public RGBLamp(String name, Room room) {
-        super(name, room);
+    public RGBLamp(String name, Room room, int id) {
+        super(name, room, id);
         this.color = LampColor.WHITE;
     }
 
     // ---------- OVERRIDES ----------
     @Override
     public void on() {
-        String cmd = id + "1" + color.getColorCodeAsString() + "#";
+        String cmd = id + color.getColorCodeAsString() + "#";
+        Log.v("ArduinoBT", "RGB ist " + cmd);
+        // TODO uncomment when Bluetooth class is ready
+        try {
+            Bluetooth.getInstance().sendData(cmd);
+        } catch (IOException e) {
+            Log.e("BT", "IOException: cannot turn light on");
+        }
+    }
+    
+    public void on(LampColor color) {
+        String cmd = id + color.getColorCodeAsString() + "#";
         Log.v("ArduinoBT", "RGB ist " + cmd);
         // TODO uncomment when Bluetooth class is ready
         try {

@@ -10,7 +10,7 @@
     tools:context="inf.uie.Limux.activity.ColorPickerActivity" >
 
     <ImageButton
-        android:id="@+id/imageButton1"
+        android:id="@+id/radarScan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -29,7 +29,9 @@
         android:layout_marginTop="10dp"
         android:ems="10"
         android:gravity="center"
-        android:hint="Enter Color Name" >
+        android:hint="Enter Color Name"
+        android:textColor="#ffffff"
+        android:textColorHint="#44ffffff" >
 
         <requestFocus />
     </EditText>
@@ -38,7 +40,7 @@
         android:id="@+id/gridLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/imageButton1"
+        android:layout_above="@+id/radarScan"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="92dp"
         android:columnCount="4" >
@@ -61,16 +63,20 @@
             android:gravity="center"
             android:text="C R E A T E   N E W   C O L O R"
             android:textColor="#ffffff"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/hexValue"
+            android:id="@+id/infoText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/imageButton1"
+            android:layout_above="@+id/radarScan"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="10dp"
-            android:text="TextView"
+            android:gravity="center"
+            android:hint="#colorcode"
+            android:textAlignment="center"
+            android:textColorHint="#44ffffff"
             android:textSize="20sp" />
 
 </RelativeLayout>

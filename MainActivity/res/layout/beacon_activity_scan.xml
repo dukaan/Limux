@@ -13,35 +13,87 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:text="Room Title"
-        android:textColor="#55ffffff"
+        android:textColor="#00ffffff"
         android:textStyle="bold" />
     
-
     <Button
-        android:id="@+id/scanButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/radarScan"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:onClick="onScanButtonClicked" />
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/refresh_button"
+        android:onClick="onScanButtonClicked"
+        android:textColor="#00000000" />
 
     <TextView
-        android:id="@+id/hexValue"
+        android:id="@+id/infoText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textColor="#00000000" />
 
-    <GridLayout
-        android:id="@+id/profilesGrid"
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/radarScan"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        android:layout_marginTop="120dp"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:id="@+id/linearLayoutScan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <GridLayout
+                android:id="@+id/profilesGrid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:rowCount="1"
+                android:scrollbars="none" >
+
+            </GridLayout>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/roomTitle"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
-        android:columnCount="2" >
+        android:text="A V A I L A B L E   P R O F I L E S"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
-    </GridLayout>
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/roomTitle"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/bulb" />
+
+    <ImageButton
+        android:id="@+id/offButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/radarScan"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:background="#00000000"
+        android:src="@drawable/off_button" />
     
 </RelativeLayout>

@@ -36,10 +36,5 @@
 			<type>2</type>
 			<location>/Users/Sophia/Sites/uni/Limux/android-beacon-library/bin/classes/org/altbeacon/beacon</location>
 		</link>
-		<link>
-			<name>res</name>
-			<type>2</type>
-			<location>/Users/Sophia/Sites/uni/Limux/android-beacon-library/bin/res</location>
-		</link>
 	</linkedResources>
 </projectDescription>

@@ -51,21 +51,27 @@ public class House {
         LampColor green = new LampColor("Gruen", 36, 146, 48);
         LampColor blue = new LampColor("Blau", 28, 77, 180);
         
-        Room livingRoom = new Room("Wohnzimmer");
-        Room bedRoom = new Room("Schlafzimmer");
+        Room livingRoom = new Room("Wohnzimmer", 1);
+        Room bedRoom = new Room("Schlafzimmer", 2);
         
-        RGBLamp lamp1 = new RGBLamp("Lampe1", livingRoom);
-        RGBLamp lamp2 = new RGBLamp("Lampe2", livingRoom);
-        RGBLamp lamp3 = new RGBLamp("Lampe3", bedRoom);
-        RGBLamp lamp4 = new RGBLamp("Lampe4", bedRoom);
+        RGBLamp lamp1 = new RGBLamp("Lampe1", livingRoom, 11);
+        RGBLamp lamp2 = new RGBLamp("Lampe2", livingRoom, 12);
+        RGBLamp lamp3 = new RGBLamp("Lampe3", livingRoom, 13);
+        RGBLamp lamp4 = new RGBLamp("Lampe4", livingRoom, 14);
+        RGBLamp	lamp5 = new RGBLamp("Lampe5", bedRoom, 21);
+        RGBLamp	lamp6 = new RGBLamp("Lampe6", bedRoom, 22);
+        RGBLamp	lamp7 = new RGBLamp("Lampe7", bedRoom, 23);
         
         List<Lamp> livingRoomLamps = new ArrayList<Lamp>();
         livingRoomLamps.add(lamp1);
         livingRoomLamps.add(lamp2);
+        livingRoomLamps.add(lamp3);
+        livingRoomLamps.add(lamp4);
         
         List<Lamp> bedRoomLamps = new ArrayList<Lamp>();
-        bedRoomLamps.add(lamp3);
-        bedRoomLamps.add(lamp4);
+        bedRoomLamps.add(lamp5);
+        bedRoomLamps.add(lamp6);
+        bedRoomLamps.add(lamp7);
         
         Profile chill = new Profile("Chillen");
         chill.addColorForLamp(lamp1, red);
@@ -76,11 +82,11 @@ public class House {
         eat.addColorForLamp(lamp1, blue);
         
         Profile sleep = new Profile("Einschlafen");
-        sleep.addColorForLamp(lamp3, red);
+        sleep.addColorForLamp(lamp7, red);
         
         Profile wake = new Profile("Aufwachen");
-        wake.addColorForLamp(lamp3, green);
-        wake.addColorForLamp(lamp4, blue);
+        wake.addColorForLamp(lamp5, green);
+        wake.addColorForLamp(lamp6, blue);
         
 
         livingRoom.addProfile(chill);
@@ -195,6 +201,15 @@ public class House {
     
     public List<Room> getRooms() {
     	return roomList;
+    }
+    
+    public Room getRoomById(int id) {
+        for (Room room : getRooms()) {
+            if (room.getId() == id) {
+                return room;
+            }
+        }
+        return null;
     }
     
     public Room getRoomByName(String name) {

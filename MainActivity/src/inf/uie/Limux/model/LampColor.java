@@ -1,5 +1,7 @@
 package inf.uie.Limux.model;
 
+import java.util.ArrayList;
+
 /**
  * @author Marcel
  */
@@ -12,11 +14,26 @@ public class LampColor {
 
     // sample colors
     public final static LampColor WHITE;
+    public final static LampColor YELLOW;
+    public final static LampColor GREEN;
+    public final static LampColor BLUE;
+    public final static LampColor RED;
+    
+    public static ArrayList<LampColor> colorPresets = new ArrayList<LampColor>();
 
     static {
         WHITE = new LampColor("white", 255, 255, 255);
-    }
-
+        YELLOW = new LampColor("yellow", 255, 255, 0);
+        GREEN = new LampColor("green", 0, 255, 0);
+        BLUE = new LampColor("blue", 0, 0, 255);
+        RED = new LampColor("red", 255, 0, 0);
+        colorPresets.add(WHITE);
+        colorPresets.add(BLUE);
+        colorPresets.add(GREEN);
+        colorPresets.add(RED);
+        colorPresets.add(YELLOW);
+        }
+ 
     // ---------- MEMBERS ----------
     /**
      * ID of the color
@@ -96,20 +113,36 @@ public class LampColor {
     	String tempBlue = "";
     	
     	if (red < 100) {
-    		tempRed = "0"+red;
+    		if(red < 10) {
+    			tempRed = "00"+red;
+    		} else {
+        		tempRed = "0"+red;
+    		}
     	} else {
     		tempRed = ""+red;
     	}
+    	
     	if (green < 100) {
-    		tempGreen = "0"+green;
+    		if(green < 10) {
+    			tempGreen = "00"+green;
+    		} else {
+        		tempGreen = "0"+green;
+    		}
     	} else {
     		tempGreen = ""+green;
     	}
+    	
     	if (blue < 100) {
-    		tempBlue = "0"+blue;
+    		if(blue < 10) {
+    			tempBlue = "00"+blue;
+    		} else {
+        		tempBlue = "0"+blue;
+    		}
     	} else {
     		tempBlue = ""+blue;
     	}
+    	
+
     	hexCode = tempRed + tempGreen + tempBlue;
     	// hexCode = "255255255";
     	return hexCode;

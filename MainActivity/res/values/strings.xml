@@ -26,5 +26,6 @@
     <string name="title_activity_profile_colors">ProfileColorsActivity</string>
     <string name="title_activity_edit_profile">EditProfileActivity</string>
     <string name="title_activity_color_picker">ColorPickerActivity</string>
+    <string name="title_activity_dim_picker">DimPickerActivity</string>
 
 </resources>

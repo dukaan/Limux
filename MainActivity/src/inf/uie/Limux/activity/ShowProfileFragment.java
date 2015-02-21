@@ -58,7 +58,7 @@ public class ShowProfileFragment extends Fragment {
 		
 		// add a button for each existing profile in the house
 		for(inf.uie.Limux.model.Profile profile : myHouse.getAllProfiles()) {
-			LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(200, 200);
+			LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(250, 250);
 			rl.setMargins(5, 5, 5, 5);
 			Button profileButton = new Button(getActivity());
 			profileButton.setLayoutParams(rl);
@@ -69,6 +69,7 @@ public class ShowProfileFragment extends Fragment {
 			profileButton.setBackground(getResources().getDrawable(R.drawable.roundedbutton));
 			//GradientDrawable gd = (GradientDrawable) profileButton.getBackground();
 			
+			/*
 			// create gradient background for profile buttons
 			ArrayList<Integer> colorList = new ArrayList<Integer>();
 			for(LampColor color : profile.getUsedColors()) {
@@ -89,7 +90,17 @@ public class ShowProfileFragment extends Fragment {
 				profileButton.setBackground(gd);
 			} else {
 				((GradientDrawable) profileButton.getBackground()).setColor(colorsInt[0]);
+			} */
+			
+			// set backgroundcolor to rgblamp color
+			if (profile.getActiveLamps().contains(myHouse.getLampByName("Lampe1"))) {
+				LampColor lcolor = profile.getLampWithColorMap().get(myHouse.getLampByName("Lampe1"));
+				((GradientDrawable) profileButton.getBackground()).setColor(Color.argb(255, lcolor.getRed(), lcolor.getGreen(), lcolor.getBlue()));
+			} else {
+				((GradientDrawable) profileButton.getBackground()).setColor(Color.WHITE);
+				profileButton.setTextColor(Color.BLACK);
 			}
+			
 			profileButton.requestLayout();
 			profileButton.setOnClickListener(profileButtonClickListener);
 			((GridLayout) getView().findViewById(R.id.buttonGrid)).addView(profileButton, rl);
